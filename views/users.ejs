@@ -10,21 +10,21 @@
 </style>
 <div class="container">
 <script type="text/javascript">
- 
 
-  
+
+
   $(document).ready(function(){
-   
+
 var table = $('#datatable-buttons').DataTable();
- 
+
     $(".paid-users").click(function(){
-     table.search('نعم').draw(); 
+     table.search('نعم').draw();
     })
     $(".all-users").click(function(){
       table.search('').draw();
     })
     $(".normal-users").click(function(){
-      table.search('لا').draw();     
+      table.search('لا').draw();
     })
 
  $(".edit").click(function(){
@@ -39,9 +39,9 @@ var table = $('#datatable-buttons').DataTable();
       },function(data){
         window.location = '/users';
       })
-  }  
+  }
  })
-     
+
     $(".pay").click(function(){
       var months = prompt('ما عدد الاشهر التى تريد اضافتها ؟');
       var user_id = $(this).attr('user');
@@ -54,7 +54,7 @@ var table = $('#datatable-buttons').DataTable();
     });
 
 
-   
+
     $("#admin").click(function(){
       var user_id = $(this).attr('user');
       $.get('/make-admin',{
@@ -82,41 +82,27 @@ var table = $('#datatable-buttons').DataTable();
 </script>
 <!-- Table -->
 <!-- page content -->
-        
+
 
 <div class="col-md-10 col-sm-9 col-xs-9">
-  
+
           <div style="margin-top:20px;" class="">
             <div class="row top_tiles">
-              <div class="animated flipInY all-users col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="tile-stats">
+              <div class="animated flipInY all-users col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="tile-stats text-center">
                   <div class="icon"><i style="padding-top:20px;"  class="fa fa-user"></i></div>
                   <div class="count"> <%= data.length %></div>
                   <h3>عدد المستخدمين</h3>
                   <p>المستخدمين جميعا</p>
                 </div>
               </div>
-              <div class="animated flipInY paid-users col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i style="padding-top:10px;" class="fa fa-money"></i></div>
-                  <div class="count"><%= users.length %></div>
-                  <h3>العضويه المدفوعه فقط</h3>
-                  <p>المستخدمين ذو العضويه المدفوعه.</p>
-                </div>
-              </div>
-              <div class="animated flipInY col-lg-4 normal-users col-md-4 col-sm-6 col-xs-12">
-                <div class="tile-stats">
-                  <div class="icon"><i style="padding-top:20px;"  class="fa fa-sort-amount-desc"></i></div>
-                  <div class="count"><%= data.length-users.length %> </div>
-                  <h3>المستخدمين العاديين</h3>
-                  <p>المستخدمين دو العضويه غير المدفوعه.</p>
-                </div>
-              </div>
-                           
-           
+
+
+
+
                <div class="x_panel">
-                 <div class="x_title">
-                   <h2>SoloSnap | <small>Users</small></h2>
+                 <div class="x_title text-center">
+                   <h2>ابن الجوزي | <small>المستخدمين</small></h2>
                    <ul class="nav navbar-right panel_toolbox">
                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                      </li>
@@ -136,7 +122,7 @@ var table = $('#datatable-buttons').DataTable();
                  </div>
                  <div class="x_content">
                    <p class="text-muted font-13 m-b-30">
-                   
+
                    </p>
                    <table id="datatable-buttons" class="table table-striped table-bordered">
                      <thead>
@@ -145,16 +131,14 @@ var table = $('#datatable-buttons').DataTable();
                          <th>البريد الالكترونى </th>
                          <th>كلمه السر</th>
                          <th>التحميلات</th>
-                         <th>وقت انتهاء الاشتراك</th>
+
                          <th>الدور</th>
                          <th>الحاله</th>
                          <th>اجعله مدير</th>
-                         <th>اعطاء اشهر مدفوعه</th>
-                         <th>حذف اشهر مدفوعه</th>
+
                          <th>حذف</th>
                          <th>حظر</th>
                          <th>فك الحظر</th>
-                         <th>مدفوع</th>
                        </tr>
                      </thead>
 
@@ -167,7 +151,7 @@ var table = $('#datatable-buttons').DataTable();
                            <td><%= user['email']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="email"></i></td>
                            <td><%= user['password']  %> <i id="<%= user['id']  %>"  what="password" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
                            <td><%= user['downloads']  %> <i id="<%= user['id']  %>"  what="downloads" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
-                           <td><%= moment(user['pay']).format('L'); %></td>
+
                            <td><% if(user['rule'] == 1){
                             %>
                             مدير
@@ -179,12 +163,11 @@ var table = $('#datatable-buttons').DataTable();
                             %>
                             يعمل
                            <% }else{ %>
-                            متوقف
+                          محظور
                            <% } %></td>
                            <td><button class="btn btn-success" id="admin" user="<%= user['id'] %>">اجعله مدير</button></td>
 
-                           <td><button class="btn btn-success pay" id="pay" user="<%= user['id'] %>">اعطه اشهر</button></td>
-                           <td><button class="btn btn-danger pay2" id="pay2" user="<%= user['id'] %>">حذف اشهر</button></td>
+
 
                            <td><a style="color:red" href="/delete-user?id=<%= user['id'] %>" onclick="return confirm('هل حقا تريد حذف هذا المستخدم ؟!');">X</a></td>
 
@@ -192,19 +175,8 @@ var table = $('#datatable-buttons').DataTable();
 
                            <td><a style="color:green" href="/unblock?user_id=<%= user['id'] %>" onclick="return confirm('هل حقا تريد فك حظر هذا المستخدم ؟!');"><button class="btn btn-success" >فك حظر</button></a></td>
 
-                           <td><% var today = new Date();
-      
-  var dd = today.getDate();
-  var mm = today.getMonth(); //January is 0!
-  var yyyy = today.getFullYear();
-  var day = yyyy+"-"+mm+"-"+dd;
-                           if(moment(user['pay']).isAfter(day)){
-                            %>
-                            نعم
-                           <% }else{ %>
-                            لا
-                           <% } %></td>
-                           
+
+
                             </tr>
                       <% }); %>
 
@@ -214,7 +186,7 @@ var table = $('#datatable-buttons').DataTable();
                </div>
              </div>
 
-             
+
                    </div>
 
 
@@ -224,7 +196,7 @@ var table = $('#datatable-buttons').DataTable();
 <div class="col-md-10 col-sm-9 col-xs-9">
                             <div class="x_panel">
                               <div class="x_title">
-                                <h2>Add | <small>User</small></h2>
+                                <h2>اضف | <small>مستخدم</small></h2>
                                 <ul class="nav navbar-right panel_toolbox">
 
                                   <li><a class="close-link"><i class="fa fa-close"></i></a>
@@ -244,7 +216,7 @@ var table = $('#datatable-buttons').DataTable();
                           <input type="text" id="name" name="name" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
-                    
+
 
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">البريد الالكترونى <span class="required">*</span>
@@ -263,8 +235,8 @@ var table = $('#datatable-buttons').DataTable();
                           <input type="text" id="name" name="password" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
-                        
-                      
+
+
 
 
                       <div class="ln_solid"></div>
