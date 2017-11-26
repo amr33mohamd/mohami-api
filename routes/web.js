@@ -39,12 +39,22 @@ app.get('/users',function(req,res){
 		 users.push(data1[i]);
 		}
 		else{
-			
+
 		}
 	}
-	
+
         	res.render('users',{data:data,users});
     	});
+    });
+  });
+});
+
+
+app.get('/books',function(req,res){
+  session.startSession(req, res,function(){
+    sql.select('books','1','1',function(data){
+        	res.render('books',{users:data});
+
     });
   });
 });
@@ -87,23 +97,24 @@ app.get('/block',function(req,res){
 	});
 });
 
-app.get('/unblock',function(req,res){
-	var user_id = req.param('user_id');
-	full_admin.unblock(user_id,function(data){
-		if(data){
-			res.redirect('/users');
-		}
-		else{
-			res.send('please contact the programmer there is error in database')
-		}
-	});
-});
 
 app.get('/delete-user',function(req,res){
 	var user_id = req.param('id');
 	sql.delete('users','id',user_id,function(data){
 		if(data){
 			res.redirect('/users');
+		}
+		else{
+			res.send('please contact programmer if you got that error again');
+		}
+	})
+});
+
+app.get('/delete-book',function(req,res){
+	var user_id = req.param('id');
+	sql.delete('books','id',user_id,function(data){
+		if(data){
+			res.redirect('/books');
 		}
 		else{
 			res.send('please contact programmer if you got that error again');
@@ -134,56 +145,22 @@ app.get('/change',function(req,res){
 	});
 });
 
-//full admin control -------------->
-app.get('/groups',function(req,res){
-  session.startSession(req, res,function(){
-    sql.select('groups','1','1',function(data){
-        res.render('groups',{data:data});
-    });
-  });
-});
-app.get('/edit-group-name',function(req,res){
-	var group_id = req.param('group_id');
-	var name = req.param('name');
-	full_admin.edit_group_name(group_id,name,function(data){
-		if(data){
-			res.send(true);
-		}
-		else{
-			res.send('please contact programmer the error may be in database or package called moment.js or add-substract-date')
-		}
-	})
+app.get('/change-book',function(req,res){
+	var id = req.param('id');
+	var what = req.param('what');
+	var new_name = req.param('new_name');
+	sql.update('books',what,new_name,'id',id,function(data){
+		res.send(data);
+	});
 });
 
-app.get('/delete-group',function(req,res){
-	var group_id = req.param('id');
-	sql.delete('groups','id',group_id,function(data){
-		if(data){
-			res.redirect('/groups');
-		}
-		else{
-			res.send('please contact programmer if you got that error again');
-		}
-	})
-});
 
-app.get('/add_group',function(req,res){
-	var name = req.param('name');
-	full_admin.add_group(name,function(data){
-		if(data){
-			res.redirect('/groups');
-		}
-		else{
-			res.send('contact programmer');
-		}
-	})
-});
 
 
 /* -------------------------------------- API ----------------------------------------- */
 app.get('/api/users',function(req,res){
 	sql.select('users','work','1',function(data){
-		 
+
 		if(data.length != 0){
 			var single = [];
 			var result = [];
@@ -197,7 +174,7 @@ app.get('/api/users',function(req,res){
 			if(single.length == 1){
 					if(single.push({name: data[i].name,avatar_url: data[i].image,id: data[i].id,special:true})){
 						if(result.push(single)){
-							single = [];			
+							single = [];
 						}
 					}
 				}
@@ -213,11 +190,11 @@ app.get('/api/users',function(req,res){
 							}
 						}
 					if(i == data.length-1){
-		
-//second loop 
-								
+
+//second loop
+
 									var single1 = [];
-									
+
 									for(let m in data){
 
 										var today = new Date();
@@ -226,11 +203,11 @@ app.get('/api/users',function(req,res){
 								var yyyy = today.getFullYear();
 								var day = yyyy+"-"+mm+"-"+dd;
 								if(moment(data[m].pay).isAfter(day) == false){
-									
+
 									if(single1.length == 1){
 											if(single1.push({name: data[i].name,avatar_url: data[m].image,id: data[m].id,special:false})){
 												if(result.push(single1)){
-													single1 = [];			
+													single1 = [];
 												}
 											}
 										}
@@ -247,23 +224,23 @@ app.get('/api/users',function(req,res){
 													}
 												}
 
-												
+
 									} // end if special
 									if(m == data.length-1){
 										res.send(result);
 										console.log(result.length);
 									}
-								} // end for looop 
-								
-							
-							
-							
+								} // end for looop
+
+
+
+
 		        }
-						
+
 			} // end if special
-			
-		} // end for looop 
-		
+
+		} // end for looop
+
 	} //there is  data
 	else{ //there is no data
 			res.send([[{name:false}]]);
@@ -277,12 +254,12 @@ app.get('/api/users',function(req,res){
 app.get('/api/fav',function(req,res){
 	var user_id = req.param('user_id');
 	sql.select('likes','someone_id',user_id,function(data1){
-		 
+
 		if(data1.length != 0){
-			
+
 			var single = [];
 			var result = [];
-			
+
 			for(let i in data1){
 				console.log(i)
 				sql.select('users','id',data1[i].liked_id,function(data){
@@ -295,8 +272,8 @@ app.get('/api/fav',function(req,res){
 									})){
 							if(result.push(single)){
 									single = [];
-									
-										
+
+
 							}
 						}
 					}
@@ -314,12 +291,12 @@ app.get('/api/fav',function(req,res){
 						res.send(result)
 					}
 				})
-				
-				
-				
-				
+
+
+
+
 			}
-			
+
 		}
 		else{
 			res.send([[{name:false}]]);
@@ -333,12 +310,12 @@ app.get('/api/fav',function(req,res){
 app.get('/api/interest',function(req,res){
 	var group_id = req.param('group_id');
 	sql.select('related_groups','group_id',group_id,function(data1){
-		 
+
 		if(data1.length != 0){
-			
+
 			var single = [];
 			var result = [];
-			
+
 			for(let i in data1){
 				console.log(i)
 				sql.select('users','id',data1[i].user_id,function(data){
@@ -351,8 +328,8 @@ app.get('/api/interest',function(req,res){
 									})){
 							if(result.push(single)){
 									single = [];
-									
-										
+
+
 							}
 						}
 					}
@@ -370,12 +347,12 @@ app.get('/api/interest',function(req,res){
 						res.send(result)
 					}
 				})
-				
-				
-				
-				
+
+
+
+
 			}
-			
+
 		}
 		else{
 			res.send([[{name:false}]]);
@@ -386,17 +363,17 @@ app.get('/api/interest',function(req,res){
 
 //all groups -------------->
 app.get('/api/interestsscreen',function(req,res){
-	
+
 	sql.select('groups','1','1',function(data1){
-		 
+
 		if(data1.length != 0){
-			
+
 			var single = [];
 			var result = [];
-			
+
 			for(let i in data1){
-				
-				
+
+
 					if(single.length == 1){
 
 						if(single.push({
@@ -406,8 +383,8 @@ app.get('/api/interestsscreen',function(req,res){
 									})){
 							if(result.push(single)){
 									single = [];
-									
-										
+
+
 							}
 						}
 					}
@@ -424,13 +401,13 @@ app.get('/api/interestsscreen',function(req,res){
 					if(i == data1.length-1){
 						res.send(result)
 					}
-				
-				
-				
-				
-				
+
+
+
+
+
 			}
-			
+
 		}
 		else{
 			res.send([[{name:false}]]);
@@ -444,14 +421,14 @@ app.get('/api/search',function(req,res){
 	sql.lselect('users','name',name,function(data1){
 		 console.log(data1);
 		if(data1.length != 0){
-			
+
 			var single = [];
 			var result = [];
-			
+
 			for(let i in data1){
-				
+
 							var today = new Date();
-		
+
 		var dd = today.getDate();
 		var mm = today.getMonth(); //January is 0!
 		var yyyy = today.getFullYear();
@@ -472,8 +449,8 @@ app.get('/api/search',function(req,res){
 									})){
 							if(result.push(single)){
 									single = [];
-									
-										
+
+
 							}
 						}
 					}
@@ -491,13 +468,13 @@ app.get('/api/search',function(req,res){
 					if(i == data1.length-1){
 						res.send(result)
 					}
-				
-				
-				
-				
-				
+
+
+
+
+
 			}
-			
+
 		}
 		else{
 			res.send([[{name:false}]]);
@@ -546,11 +523,11 @@ app.get('/api/user',function(req,res){
 			sql.select('groups','id',groups[g].group_id,function(group_data){
 					group.push(group_data[0]);
 					if(g == groups.length-1){
-						
+
 						let data = {
 						id: user[0].id,
 						name: user[0].name,
-						
+
 						groups: group,
 						special: special,
 						avatar_url: user[0].image,
@@ -561,10 +538,10 @@ app.get('/api/user',function(req,res){
 						res.send(data);
 					}
 			});
-			
-			
+
+
 		}
-			
+
 		})
 	})
 })
@@ -584,7 +561,7 @@ app.get('/api/trend',function(req,res){
 					data.push({
 				id: user[c].id,
 				name: user[c].name,
-				avatar_url: user[c].image, 
+				avatar_url: user[c].image,
 				special: special,
 					})
 				}
@@ -596,7 +573,7 @@ app.get('/api/trend',function(req,res){
 					}
 			}
 		})
-			
-		
-	
+
+
+
 })

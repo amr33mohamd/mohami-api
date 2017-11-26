@@ -3,21 +3,21 @@
    app = express();
   var mysql = require('mysql');
    port = process.env.PORT || 5000;
-    
+
      addSubtractDate = require("add-subtract-date");
     moment = require('moment');
-moment().format('L');  
+moment().format('L');
   app.set('view engine', 'ejs');
   app.use(express.static('public'));
- 
+
   con = mysql.createConnection({
-  host: "xq7t6tasopo9xxbs.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-  user: "ig0y42t0qon3wqzt",
-  password: "hsaznraptzuuo2yy",
-  database:"c7waly6mhus0n37w",
+  host: "localhost",
+  user: "root",
+  password: "",
+  database:"library",
   charset: 'utf8'
   });
- 
+
   /*
    con = mysql.createConnection({
   host: "localhost",

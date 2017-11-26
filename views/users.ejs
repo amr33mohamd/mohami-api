@@ -133,12 +133,11 @@ var table = $('#datatable-buttons').DataTable();
                          <th>التحميلات</th>
 
                          <th>الدور</th>
-                         <th>الحاله</th>
+
                          <th>اجعله مدير</th>
 
                          <th>حذف</th>
-                         <th>حظر</th>
-                         <th>فك الحظر</th>
+
                        </tr>
                      </thead>
 
@@ -158,22 +157,13 @@ var table = $('#datatable-buttons').DataTable();
                            <% }else{ %>
                             مستخدم عادي
                            <% } %></td>
-                           <td>
-                           <% if(user['work'] == 1){
-                            %>
-                            يعمل
-                           <% }else{ %>
-                          محظور
-                           <% } %></td>
+
                            <td><button class="btn btn-success" id="admin" user="<%= user['id'] %>">اجعله مدير</button></td>
 
 
 
                            <td><a style="color:red" href="/delete-user?id=<%= user['id'] %>" onclick="return confirm('هل حقا تريد حذف هذا المستخدم ؟!');">X</a></td>
 
-                           <td><a style="color:red" href="/block?user_id=<%= user['id'] %>" onclick="return confirm('هل حقا تريد حظر هذا المستخدم ؟!');"><button class="btn btn-danger" >حظر</button></a></td>
-
-                           <td><a style="color:green" href="/unblock?user_id=<%= user['id'] %>" onclick="return confirm('هل حقا تريد فك حظر هذا المستخدم ؟!');"><button class="btn btn-success" >فك حظر</button></a></td>
 
 
 
