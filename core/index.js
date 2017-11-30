@@ -9,7 +9,8 @@
 moment().format('L');
   app.set('view engine', 'ejs');
   app.use(express.static('public'));
-
+   fileUpload = require('express-fileupload');
+app.use(fileUpload());
   con = mysql.createConnection({
   host: "localhost",
   user: "root",

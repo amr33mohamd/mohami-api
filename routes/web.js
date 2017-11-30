@@ -72,38 +72,37 @@ app.get('/add-books',function(req,res){
 });
 
 app.post('/add_book',function(req,res){
-   var image = req.body.image;
-   firebase = require("firebase");
-    config = {
-     apiKey: "AIzaSyDqL4q3ZnKORiiM9HY8GcX8NBZ3DZr0k-M",
-     authDomain: "library-f0ef5.firebaseapp.com",
-     databaseURL: "https://library-f0ef5.firebaseio.com",
-     storageBucket: "gs://library-f0ef5.appspot.com",
+   var image = req.files.image;
+   var name = req.body.name;
+   var desc = req.body.desc;
+   var pdf = req.files.pdf || null;
+   var random_num = Math.random();
+   image.mv('images/'+random_num+'.jpg', function(err) {
+    if(pdf != null){
+      pdf.mv('books/'+random_num+1+'.jpg', function(err) {
 
-   };
+     });
+    }
+  });
+  var image_link = 'images/'+random_num+'.jpg';
+  if(pdf == null){
+    var pdf_link = '';
+  }
+  else{
+    var pdf_link = 'books/'+random_num+1+'.jpg';
+  }
 
-    firebase.initializeApp(config);
+   con.query('insert into books(name,descc,image,link) values(?,?,?,?)',[name,desc,image_link,pdf_link],function(err,ress){
+     if(err){
+       res.send(err);
+     }
+     else{
+       res.send('done .....');
+     }
+   })
 
 
-   // Create a root reference
-var storageRef = firebase.storage().ref();
-
-// Create a reference to 'mountains.jpg'
-var mountainsRef = storageRef.child('mountains.jpg');
-
-// Create a reference to 'images/mountains.jpg'
-var mountainImagesRef = storageRef.child('images/mountains.jpg');
-
-// While the file names are the same, the references point to different files
-mountainsRef.name === mountainImagesRef.name            // true
-mountainsRef.fullPath === mountainImagesRef.fullPath    // false
-
-
-ref.put(image).then(function(snapshot) {
-  console.log('Uploaded a blob or file!');
 });
-
-})
 
 
 app.get('/make-admin',function(req,res){
