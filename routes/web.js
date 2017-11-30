@@ -59,6 +59,53 @@ app.get('/books',function(req,res){
   });
 });
 
+app.get('/add-books',function(req,res){
+  session.startSession(req, res,function(){
+    sql.select('categories','1','1',function(categories){
+      sql.select('sub_categories','1','1',function(sub_categories){
+        sql.select('books','1','1',function(data){
+        res.render('add-books',{categories,sub_categories,data});
+        });
+      })
+    })
+  });
+});
+
+app.post('/add_book',function(req,res){
+   var image = req.body.image;
+   firebase = require("firebase");
+    config = {
+     apiKey: "AIzaSyDqL4q3ZnKORiiM9HY8GcX8NBZ3DZr0k-M",
+     authDomain: "library-f0ef5.firebaseapp.com",
+     databaseURL: "https://library-f0ef5.firebaseio.com",
+     storageBucket: "gs://library-f0ef5.appspot.com",
+
+   };
+
+    firebase.initializeApp(config);
+
+
+   // Create a root reference
+var storageRef = firebase.storage().ref();
+
+// Create a reference to 'mountains.jpg'
+var mountainsRef = storageRef.child('mountains.jpg');
+
+// Create a reference to 'images/mountains.jpg'
+var mountainImagesRef = storageRef.child('images/mountains.jpg');
+
+// While the file names are the same, the references point to different files
+mountainsRef.name === mountainImagesRef.name            // true
+mountainsRef.fullPath === mountainImagesRef.fullPath    // false
+
+
+ref.put(image).then(function(snapshot) {
+  console.log('Uploaded a blob or file!');
+});
+
+})
+
+
 app.get('/make-admin',function(req,res){
 	var user_id = req.param('user_id');
 	full_admin.makeAdmin(user_id,function(data){
@@ -153,7 +200,6 @@ app.get('/change-book',function(req,res){
 		res.send(data);
 	});
 });
-
 
 
 
