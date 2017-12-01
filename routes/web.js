@@ -103,14 +103,18 @@ app.get('/test',function(req,res){
   var mysqll = require('mysql');
 
 var conn = mysqll.createConnection({
-  host: "178.62.17.251",
+  host: "localhost",
   user: "root",
   password: "BeRichToGetABitch"
 });
 
 conn.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+  if (err){
+    res.send('the error is'+err);
+  }
+  els{
+    res.send('no error connected finnaly');
+  }
 });
 })
 
