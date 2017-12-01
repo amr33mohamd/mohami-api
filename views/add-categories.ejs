@@ -104,11 +104,9 @@ $(".edit").click(function(){
            <div class="row top_tiles">
              <div class="animated flipInY all-users col-lg-12 col-md-12 col-sm-12 col-xs-12">
                <div class="tile-stats text-center">
-                 <div class="icon"><i style="padding-top:20px;"  class="fa fa-book"></i></div>
-                 <div class="count"> <%= data.length %></div>
-                 <h3>عدد الكتب</h3>
-                 <p>
-                   الكتب جميعا</p>
+                 <div class="icon"><i style="padding-top:20px;"  class="fa fa-tasks"></i></div>
+                 <div class="count"> <%= categories.length %></div>
+                 <h3>عدد الاقسام</h3>
                </div>
              </div>
 
@@ -119,7 +117,7 @@ $(".edit").click(function(){
 <div class="col-md-12 col-sm-9 col-xs-12">
                            <div class="x_panel">
                              <div class="x_title">
-                               <h2>اضف | <small>كتاب</small></h2>
+                               <h2>اضف | <small>قسم</small></h2>
                                <ul class="nav navbar-right panel_toolbox">
 
                                  <li><a class="close-link"><i class="fa fa-close"></i></a>
@@ -130,64 +128,13 @@ $(".edit").click(function(){
                              <div class="x_content">
 
 
-                               <form encType="multipart/form-data" method="post" action="/add_book" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                               <form encType="multipart/form-data" method="post" action="/add_category" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
 
                      <div class="form-group">
-                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">الاسم <span class="required">*</span>
+                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">اسم القسم <span class="required">*</span>
                        </label>
                        <div class="col-md-6 col-sm-6 col-xs-12">
                          <input type="text" id="name" name="name" required="required" class="form-control col-md-7 col-xs-12">
-                       </div>
-                     </div>
-
-                     <div class="form-group">
-                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">الوصف <span class="required">*</span>
-                       </label>
-                       <div class="col-md-6 col-sm-6 col-xs-12">
-                         <textarea  id="name" name="desc" required="required" class="form-control col-md-7 col-xs-12"></textarea>
-                       </div>
-                     </div>
-
-                   <div class="form-group">
-                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">التصنيف الاساسي <span class="required">*</span>
-                       </label>
-                       <div class="col-md-6 col-sm-6 col-xs-12">
-                         <select class="form-control col-md-7 col-xs-12" name="category">
-                           <%  categories.forEach(function(category){ %>
-                           <option value="<%= category['id'] %>"><%= category['name'] %></option>
-                           <% }) %>
-                         </select>
-                     </div>
-                     </div>
-
-
-
-                     <div class="form-group">
-                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">التصنيف الفرعي<span class="required">*</span>
-                       </label>
-                       <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control col-md-7 col-xs-12" name="sub_category">
-                            <%  sub_categories.forEach(function(sub_category){ %>
-                            <option value="<%= sub_category['id'] %>"><%= sub_category['name'] %></option>
-                            <% }) %>
-                          </select>
-                       </div>
-                     </div>
-
-
-                     <div class="form-group">
-                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">صوره للكتاب *<span class="required">*</span>
-                       </label>
-                       <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="file" name="image" value="">
-                       </div>
-                     </div>
-
-                     <div class="form-group">
-                       <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">اذا كان الكتاب للتحميل قم برفعه هنا <span class="required">*</span>
-                       </label>
-                       <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="file" name="pdf" value="">
                        </div>
                      </div>
 
@@ -209,10 +156,5 @@ $(".edit").click(function(){
 
 
                   </div>
-
-
-
-
-
 
 <%- include('parts/footer'); %>

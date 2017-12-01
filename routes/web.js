@@ -50,13 +50,62 @@ app.get('/users',function(req,res){
 });
 
 
+app.get('/add-categories',function(req,res){
+  session.startSession(req, res,function(){
+    sql.select('categories','1','1',function(categories){
+      res.render('add-categories',{categories});
+    });
+  });
+});
+
+app.post('/add_category',function(req,res){
+   var name = req.body.name;
+
+   con.query('insert into categories(name) values(?)',[name],function(err,ress){
+     if(err){
+       res.send(err);
+     }
+     else{
+       res.send('done .....');
+     }
+   })
+
+
+});
+
+app.get('/add-subcategories',function(req,res){
+    session.startSession(req, res,function(){
+      sql.select('categories','1','1',function(categories){
+        sql.select('sub_categories','1','1',function(sub_categories){
+          res.render('add-subcategories',{categories,sub_categories});;
+        })
+      })
+    });
+});
+
+app.post('/add_subcategory',function(req,res){
+   var name = req.body.name;
+   var category = req.body.category;
+   //var category = req.query.category;
+   //console.log(category);
+
+   con.query('insert into sub_categories(name,parent_category_id) values(?,?)',[name,category],function(err,ress){
+     if(err){
+       res.send(err);
+     }
+     else{
+       res.send('done .....');
+     }
+   })
+});
+
 app.get('/books',function(req,res){
   session.startSession(req, res,function(){
     sql.select('books','1','1',function(data){
         	res.render('books',{users:data});
 
     });
-  });
+});
 });
 
 app.get('/add-books',function(req,res){
@@ -100,8 +149,6 @@ app.post('/add_book',function(req,res){
        res.send('done .....');
      }
    })
-
-
 });
 
 

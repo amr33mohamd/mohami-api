@@ -15,7 +15,7 @@ app.use(fileUpload());
   host: "localhost",
   user: "root",
   password: "",
-  database:"library",
+  database:"database",
   charset: 'utf8'
   });
 
