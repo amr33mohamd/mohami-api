@@ -181,7 +181,14 @@ conn.connect(function(err) {
     res.send('the error is'+err);
   }
   else{
-    res.send('no error connected finnaly');
+    conn.query("GRANT ALL PRIVILEGES ON mydb.* TO 'amr'@'%' WITH GRANT OPTION;",function(err,ress){
+      if(ress){
+        res.send('done');
+      }
+      else{
+        res.send(err);
+      }
+    })
   }
 });
 })
