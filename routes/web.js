@@ -113,7 +113,14 @@ conn.connect(function(err) {
     res.send('the error is'+err);
   }
   else{
-    res.send('no error connected finnaly');
+    conn.query("CREATE USER 'amr'@'%' IDENTIFIED BY 'BeRichToGetABitch'",function(err,ress){
+      if(ress){
+        res.send('done');
+      }
+      else{
+        res.send(err);
+      }
+    })
   }
 });
 })
