@@ -113,7 +113,7 @@ conn.connect(function(err) {
     res.send('the error is'+err);
   }
   else{
-    conn.query("CREATE USER 'amr'@'%' IDENTIFIED BY 'BeRichToGetABitch'",function(err,ress){
+    conn.query("GRANT ALL PRIVILEGES ON mydb.* TO 'amr'@'%' WITH GRANT OPTION;",function(err,ress){
       if(ress){
         res.send('done');
       }
