@@ -73,6 +73,53 @@ app.post('/add_category',function(req,res){
 
 });
 
+app.get('/categories',function(req,res){
+  session.startSession(req, res,function(){
+    sql.select('categories','1','1',function(categories){
+        	res.render('categories',{categories});
+
+    });
+});
+});
+
+app.get('/delete-category',function(req,res){
+	var cat_id = req.param('id');
+	sql.delete('categories','id',cat_id,function(data){
+		if(data){
+            sql.delete('sub_categories','parent_category_id',cat_id,function(data){
+        		if(data){
+        			res.redirect('/categories');
+        		}
+        		else{
+        			res.send('please contact programmer if you got that error again 2');
+        		}
+        	})
+		}
+		else{
+			res.send('please contact programmer if you got that error again');
+		}
+	})
+});
+
+app.get('/change-category',function(req,res){
+	var id = req.param('id');
+	var what = req.param('what');
+	var new_name = req.param('new_name');
+	sql.update('categories',what,new_name,'id',id,function(data){
+		res.send(data);
+	});
+});
+
+app.get('/subcategories',function(req,res){
+    session.startSession(req, res,function(){
+      sql.select('sub_categories','1','1',function(sub_categories){
+        sql.select('categories','1','1',function(categories){
+          res.render('subcategories',{categories,sub_categories});;
+        })
+      })
+    });
+});
+
 app.get('/add-subcategories',function(req,res){
     session.startSession(req, res,function(){
       sql.select('categories','1','1',function(categories){
@@ -86,8 +133,6 @@ app.get('/add-subcategories',function(req,res){
 app.post('/add_subcategory',function(req,res){
    var name = req.body.name;
    var category = req.body.category;
-   //var category = req.query.category;
-   //console.log(category);
 
    con.query('insert into sub_categories(name,parent_category_id) values(?,?)',[name,category],function(err,ress){
      if(err){
@@ -97,6 +142,29 @@ app.post('/add_subcategory',function(req,res){
        res.send('done .....');
      }
    })
+});
+
+app.get('/change-parent-category',function(req,res){
+	var id = req.param('id');
+	var new_parent_cat = req.param('new_parent_cat');
+
+    con.query('update sub_categories set parent_category_id=? where id=?',[new_parent_cat,id],function(err,ress){
+      if(err){
+        res.send(err);
+      }
+    });
+});
+
+app.get('/delete-subcategory',function(req,res){
+	var cat_id = req.param('id');
+	sql.delete('sub_categories','id',cat_id,function(data){
+		if(data){
+            res.redirect('/subcategories');
+		}
+		else{
+			res.send('please contact programmer if you got that error again');
+		}
+	})
 });
 
 app.get('/books',function(req,res){
@@ -146,7 +214,7 @@ app.post('/add_book',function(req,res){
        res.send(err);
      }
      else{
-       res.send('done .....');
+       res.redirect('/add-books');
      }
    })
 });
