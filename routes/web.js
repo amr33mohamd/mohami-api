@@ -167,6 +167,25 @@ app.get('/delete-subcategory',function(req,res){
 	})
 });
 
+app.get('/test',function(req,res){
+  var mysqll = require('mysql');
+
+var conn = mysqll.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "BeRichToGetABitch"
+});
+
+conn.connect(function(err) {
+  if (err){
+    res.send('the error is'+err);
+  }
+  else{
+    res.send('no error connected finnaly');
+  }
+});
+})
+
 app.get('/books',function(req,res){
   session.startSession(req, res,function(){
     sql.select('books','1','1',function(data){
