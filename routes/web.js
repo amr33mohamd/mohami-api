@@ -99,6 +99,21 @@ app.post('/add_subcategory',function(req,res){
    })
 });
 
+app.get('/test',function(req,res){
+  var mysqll = require('mysql');
+
+var conn = mysqll.createConnection({
+  host: "178.62.17.251",
+  user: "root",
+  password: "BeRichToGetABitch"
+});
+
+conn.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+})
+
 app.get('/books',function(req,res){
   session.startSession(req, res,function(){
     sql.select('books','1','1',function(data){
