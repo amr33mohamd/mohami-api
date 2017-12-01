@@ -112,7 +112,7 @@ conn.connect(function(err) {
   if (err){
     res.send('the error is'+err);
   }
-  els{
+  else{
     res.send('no error connected finnaly');
   }
 });
