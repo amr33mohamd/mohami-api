@@ -12,7 +12,7 @@ moment().format('L');
    fileUpload = require('express-fileupload');
 app.use(fileUpload());
   con = mysql.createConnection({
-  host: "localhost",
+  host: "localhost:8000",
   user: "root",
   password: "",
   database:"database",
