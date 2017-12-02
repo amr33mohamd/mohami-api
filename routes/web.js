@@ -103,9 +103,10 @@ app.get('/test',function(req,res){
   var mysqll = require('mysql');
 
 var conn = mysqll.createConnection({
-  host: "localhost",
+  host: "127.0.0.1",
   user: "root",
-  password: "BeRichToGetABitch"
+  password: "",
+
 });
 
 conn.connect(function(err) {
@@ -113,14 +114,15 @@ conn.connect(function(err) {
     res.send('the error is'+err);
   }
   else{
-    conn.query("GRANT ALL PRIVILEGES ON mydb.* TO 'amr'@'%' WITH GRANT OPTION;",function(err,ress){
-      if(ress){
-        res.send('done');
-      }
-      else{
-        res.send(err);
-      }
-    })
+    res.send('connected');
+    // conn.query("GRANT ALL PRIVILEGES ON mydb.* TO 'amr'@'%' WITH GRANT OPTION;",function(err,ress){
+    //   if(ress){
+    //     res.send('done');
+    //   }
+    //   else{
+    //     res.send(err);
+    //   }
+    // })
   }
 });
 })
