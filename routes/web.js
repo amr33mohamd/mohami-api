@@ -171,7 +171,7 @@ app.get('/test',function(req,res){
   var mysqll = require('mysql');
 
 var conn = mysqll.createConnection({
-  host: "localhost:8000",
+  host: "localhost",
   user: "root",
   password: "BeRichToGetABitch"
 });

@@ -1,6 +1,6 @@
 
 const con = mysql.createConnection({
-  host: "localhost:8000",
+  host: "localhost",
   user: "root",
   password: "",
   database: "database"
