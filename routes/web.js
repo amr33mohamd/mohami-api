@@ -134,7 +134,7 @@ app.post('/add_subcategory',function(req,res){
    var name = req.body.name;
    var category = req.body.category;
 
-   con.query('insert into sub_categories(name,parent_category_id) values(?,?)',[name,category],function(err,ress){
+   con.query('insert into sub_categories(name,parent_category_id) values(?,?)',[name,category],function(err,res){
      if(err){
        res.send(err);
      }
@@ -148,7 +148,7 @@ app.get('/change-parent-category',function(req,res){
 	var id = req.param('id');
 	var new_parent_cat = req.param('new_parent_cat');
 
-    con.query('update sub_categories set parent_category_id=? where id=?',[new_parent_cat,id],function(err,ress){
+    con.query('update sub_categories set parent_category_id=? where id=?',[new_parent_cat,id],function(err,res){
       if(err){
         res.send(err);
       }
@@ -192,6 +192,50 @@ conn.connect(function(err) {
   }
 });
 })
+
+function FormatOrders(unformatted_orders, callback)
+{
+    var orders = [];
+    unformatted_orders.forEach(function(order, index, array) {
+        con.query('SELECT name,price,link FROM books where id=? LIMIT 1',[ order['book_id'] ],function(err,books){
+            if(!err) {
+                con.query('SELECT name,email,country,address,currency FROM users where id=? LIMIT 1',[ order['user_id'] ],function(err,users){
+                    if(!err) {
+                        var bookObj = {name: books[0].name, link: books[0].link, price: books[0].price};
+                        var userObj = {name: users[0].name, email: users[0].email, country: users[0].country, address: users[0].address, currency: users[0].currency};
+                        var formatted_order = {id: order['id'], user: userObj, book: bookObj, method: order['method'], status: order['status']};
+                        orders.push(formatted_order);
+
+                        if(index === array.length - 1)
+                            callback(orders)
+                    }
+                });
+            }
+        });
+    });
+}
+
+app.get('/orders',function(req,res){
+    session.startSession(req, res,function() {
+        sql.select('orders','1','1',function(unformatted_orders) {
+            FormatOrders(unformatted_orders, function (orders) {
+                res.render('orders', {orders});
+            });
+        });
+    });
+});
+
+app.get('/change-order-status',function(req,res){
+	var id = req.param('id');
+    var status = req.param('status');
+
+    con.query('update orders set status=? where id=?',[status, id],function(err,ress){
+      if(err)
+        res.send(err);
+      else
+        res.redirect('/orders');
+    });
+});
 
 app.get('/books',function(req,res){
   session.startSession(req, res,function(){
