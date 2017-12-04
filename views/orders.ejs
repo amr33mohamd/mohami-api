@@ -248,7 +248,7 @@ $(".edit").click(function(){
 
                             <td><%= methodStr %></td>
                             <td>
-                                <select id="<%= order.id %>" class="select_order_status">
+                                <select class="form-control" id="<%= order.id %>" class="select_order_status">
                                   <%
                                     let statusStr = ["قيد الانتظار", "تم القبول", "تم التسليم"];
                                     for(let i = 0; i != 3; ++ i) {

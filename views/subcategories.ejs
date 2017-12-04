@@ -45,7 +45,7 @@ $(".edit").click(function(){
 $(".select_parent_category").change(function (){
     var new_parent_cat = $(this).find("option:checked").val();
     var id = $(this).attr('id');
-    
+
     $.get('/change-parent-category',{
         id,
         new_parent_cat
@@ -151,7 +151,7 @@ $(".select_parent_category").change(function (){
                           <td><%= subcat['name']  %> <i id="<%= subcat['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="name"></i></td>
 
                           <td>
-                            <select id="<%= subcat['id'] %>" class="select_parent_category">
+                            <select class="form-control" id="<%= subcat['id'] %>" class="select_parent_category">
                               <%  categories.forEach(function(cat) {
                                         if(cat['id'] == subcat['parent_category_id']) {%>
                                     <option value="<%= cat['id'] %>" selected><%= cat['name'] %></option>

@@ -183,14 +183,14 @@ conn.connect(function(err) {
   }
   else{
     res.send('connected');
-    // conn.query("GRANT ALL PRIVILEGES ON mydb.* TO 'amr'@'%' WITH GRANT OPTION;",function(err,ress){
-    //   if(ress){
-    //     res.send('done');
-    //   }
-    //   else{
-    //     res.send(err);
-    //   }
-    // })
+    conn.query("GRANT ALL PRIVILEGES ON mydb.* TO 'amr'@'%' WITH GRANT OPTION",function(err,ress){
+      if(ress){
+        res.send('done');
+      }
+      else{
+        res.send(err);
+      }
+    })
   }
 });
 })
