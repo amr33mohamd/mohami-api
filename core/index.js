@@ -12,8 +12,8 @@ moment().format('L');
    fileUpload = require('express-fileupload');
 app.use(fileUpload());
   con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
+  host: "178.62.17.251",
+  user: "amr",
   password: "BeRichToGetABitch",
   database:"library",
   charset: 'utf8'
