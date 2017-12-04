@@ -15,7 +15,7 @@ app.use(fileUpload());
   host: "127.0.0.1",
   user: "root",
   password: "BeRichToGetABitch",
-  database:"library",
+  database:"mydb",
 
   });
 
