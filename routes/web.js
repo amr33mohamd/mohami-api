@@ -173,7 +173,7 @@ app.get('/test',function(req,res){
 var conn = mysqll.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "",
+  password: "BeRichToGetABitch",
 
 });
 
