@@ -14,8 +14,8 @@ app.use(fileUpload());
   con = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "BeRichToGetABitch",
-  database:"mydb",
+  password: "",
+  database:"library",
 
   });
 
