@@ -7,3 +7,5 @@ require('./routes/api/categories');
 require('./routes/api/sub_categories');
 require('./routes/api/books_of_cat');
 require('./routes/api/books_of_subcat');
+require('./routes/api/screenshots_of_book');
+require('./routes/api/comments_of_book');
