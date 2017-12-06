@@ -1,8 +1,21 @@
 app.get('/api/homescreen',function(req,res){
-  var cat_num = 3;
-  var res_categories = [];
+
+  data = [];
   sql.select('categories','1','1',function(categories){
-    res.send('here :'+categories[cat_num].id);
+    for(let counter in categories){
+      con.query("SELECT id AS book_ID, name AS book_name, image AS book_photo, author_name FROM books WHERE category_id=? ",
+      [categories[counter].id],function(err,books){
+          data.push({
+            cat_ID: categories[counter].id,
+            cat_name : categories[counter].name,
+            cat_books: books,
+          });
+          if(counter == categories.length-1){
+            res.json(data);
+          }
+
+      })
+    }
   })
 
 });

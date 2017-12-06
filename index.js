@@ -12,3 +12,4 @@ require('./routes/api/comments_of_book');
 require('./routes/api/desc_of_book');
 require('./routes/api/price_of_book');
 require('./routes/api/dllink_of_book');
+require('./routes/api/my_library.js');
