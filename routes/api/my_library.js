@@ -21,25 +21,25 @@ app.get('/api/add-my-library',function(req,res){
 
 
 app.get('/api/show-my-library',function(req,res){
-  data = [];
   var user_id = req.param('user_id');
   sql.select('my_library','user_id',user_id,function(library){
     if(library.length == 0){
-      res.json({status:'failed'});
+      res.json({status:0});
     }
     else{
+        data = [];
+
       for(let counter in library){
-        con.query('select id AS book_ID, name AS book_name, image AS book_photo, author_name FROM books WHERE id=?',[library[counter].book_id],function(err,book){
+        con.query('select id, name AS book_name, image AS book_photo, author_name FROM books WHERE id=?',[library[counter].book_id],function(err,book){
           data.push({
-            book_ID: book['book_ID'],
-            book_name : book[0].book_name,
-            book_photo : book[0].book_photo,
-            author_name : book[0].author_name
+            id: book['id'],
+            book_name : book[0]['book_name'],
+            book_photo : book[0]['book_photo'],
+            author_name : book[0]['author_name']
           });
-          console.log(book);
           if(counter == library.length-1){
             res.json({
-              status:'successed',
+              status:1,
               books:data
             })
           }
