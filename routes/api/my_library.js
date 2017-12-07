@@ -1,24 +1,53 @@
 app.get('/api/add-my-library',function(req,res){
-  var user_id = req.param('user_id');
-  var book_id = req.param('book_id');
-  sql.dselect('my_library','user_id',user_id,'book_id',book_id,function(books){
-    if(books.length == 0 ){
-      con.query('insert into my_library(user_id,book_id) values(?,?)',[user_id,book_id],function(err,response){
-        if(!err){
-          res.json({status:'done'});
+    var user_id = req.param('user_id');
+    var book_id = req.param('book_id');
+    sql.dselect('my_library','user_id',user_id,'book_id',book_id,function(books) {
+        if(books.length == 0 ) {
+            con.query('insert into my_library(user_id,book_id) values(?,?)',[user_id,book_id],function(err,response){
+                if(!err)
+                {
+                    con.query('select MyLibraryBooksIDs FROM users WHERE id=? LIMIT 1',[user_id],function(err,data){
+                        if(!err) {
+                            if(data[0]['MyLibraryBooksIDs'].length > 0)
+                            {
+                                con.query('UPDATE users SET MyLibraryBooksIDs=? WHERE id=?',[data[0]['MyLibraryBooksIDs'].concat("," + String(book_id)), user_id],function(err,data){
+                                    if(!err){
+                                      res.json({reply:1});
+                                    }
+                                    else{
+                                      res.json({reply:0});
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                con.query('UPDATE users SET MyLibraryBooksIDs=? WHERE id=?',[book_id, user_id],function(err,data){
+                                    if(!err){
+                                      res.json({reply:1});
+                                    }
+                                    else{
+                                      res.json({reply:0});
+                                    }
+                                });
+                            }
+                        }
+                        else
+                          res.json({reply:0});
+                    });
+                }
+                else
+                {
+                  res.json({reply:0});
+                }
+            })
         }
-        else{
-          res.send(err);
+        else
+        {
+            // already exists
+            res.json({reply:-1});
         }
-      })
-    }
-    else{
-      res.json({status:'added_before'});
-    }
-  })
+    })
 });
-
-
 
 app.get('/api/show-my-library',function(req,res){
   var user_id = req.param('user_id');
