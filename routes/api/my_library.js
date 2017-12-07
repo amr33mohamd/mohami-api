@@ -30,9 +30,9 @@ app.get('/api/show-my-library',function(req,res){
         data = [];
 
       for(let counter in library){
-        con.query('select id, name AS book_name, image AS book_photo, author_name FROM books WHERE id=?',[library[counter].book_id],function(err,book){
+        con.query('select id, name AS book_name, image AS book_photo, author_name FROM books WHERE id=?',[library[counter]['book_id']],function(err,book){
           data.push({
-            id: book['id'],
+            id: book[0]['id'],
             book_name : book[0]['book_name'],
             book_photo : book[0]['book_photo'],
             author_name : book[0]['author_name']
