@@ -13,3 +13,6 @@ require('./routes/api/desc_of_book');
 require('./routes/api/price_of_book');
 require('./routes/api/dllink_of_book');
 require('./routes/api/my_library.js');
+require('./routes/buy/buy-first.js');
+require('./routes/buy/buy-second');
+require('./routes/api/feedback');

@@ -50,6 +50,14 @@ app.get('/users',function(req,res){
 });
 
 
+app.get('/feedbacks',function(req,res){
+  session.startSession(req, res,function(){
+	sql.select('feedbacks','1','1',function(users){
+        	res.render('feedback',{data:users});
+    });
+  });
+});
+
 app.get('/add-categories',function(req,res){
   session.startSession(req, res,function(){
     sql.select('categories','1','1',function(categories){
