@@ -18,3 +18,4 @@ require('./routes/api/signin.js');
 require('./routes/api/orders.js');
 require('./routes/api/add_comment.js');
 require('./routes/api/search.js');
+require('./routes/api/set_currency.js');
