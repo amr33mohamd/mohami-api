@@ -16,3 +16,4 @@ require('./routes/api/my_library.js');
 require('./routes/api/signup.js');
 require('./routes/api/signin.js');
 require('./routes/api/orders.js');
+require('./routes/api/add_comment.js');
