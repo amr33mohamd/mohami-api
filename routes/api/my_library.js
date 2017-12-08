@@ -60,6 +60,8 @@ app.get('/api/show-my-library',function(req,res){
 
       for(let counter in library){
         con.query('select id, name AS book_name, image AS book_photo, author_name FROM books WHERE id=?',[library[counter]['book_id']],function(err,book){
+            if(book !== undefined && book.length > 0)
+            {
           data.push({
             id: book[0]['id'],
             book_name : book[0]['book_name'],
@@ -72,7 +74,7 @@ app.get('/api/show-my-library',function(req,res){
               books:data
             })
           }
-        })
+      }})
 
       }
     } //end if there are data
