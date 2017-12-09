@@ -22,7 +22,7 @@ app.use(fileUpload());
   host: "127.0.0.1",
   user: "root",
   password: "",
-  database:"library",
+  database:"mydb",
 
   });
 
