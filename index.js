@@ -16,12 +16,9 @@ require('./routes/api/dllink_of_book');
 require('./routes/api/my_library.js');
 require('./routes/buy/buy-first.js');
 require('./routes/buy/buy-second');
-require('./routes/api/feedback');
 require('./routes/api/set_currency');
 require('./routes/api/signin');
 require('./routes/api/signup');
 require('./routes/api/orders');
 require('./routes/api/search');
 require('./routes/api/add_comment');
-
-require('./routes/feedbacks');
