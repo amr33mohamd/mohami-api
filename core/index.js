@@ -8,7 +8,7 @@
     moment = require('moment');
 moment().format('L');
   app.set('view engine', 'ejs');
-  app.use(express.static('public'));
+  app.use('/public', express.static('public'));
   app.use('/images', express.static('images'));
   app.use('/books', express.static('books'));
    fileUpload = require('express-fileupload');
@@ -21,7 +21,7 @@ app.use(fileUpload());
   con = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "BeRichToGetABitch",
+  password: "",
   database:"mydb",
 
   });

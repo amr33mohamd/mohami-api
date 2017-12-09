@@ -251,7 +251,6 @@ app.get('/books',function(req,res){
   session.startSession(req, res,function(){
     sql.select('books','1','1',function(data){
         	res.render('books',{users:data});
-
     });
 });
 });
@@ -297,7 +296,7 @@ app.post('/add_book',function(req,res){
   else{
     var pdf_link = 'books/'+random_num+1+'.jpg';
   }
-  
+
 
    con.query('insert into books(name,descc,image,link,price,author_name,category_id,sub_category_id) values(?,?,?,?,?,?,?,?)',[name,desc,'images/'+random_num+'.jpg',pdf_link,price,author_name,category_id,sub_category_id],function(err,ress){
      if(err){
