@@ -272,6 +272,7 @@ app.post('/add_book',function(req,res){
    var image = req.files.image;
    var name = req.body.name;
    var desc = req.body.desc;
+   var author_name = req.body.author_name;
    var pdf = req.files.pdf || null;
    var price = req.body.price || null;
    var shot1 = req.files.shot1 || null;
@@ -295,7 +296,7 @@ app.post('/add_book',function(req,res){
     var pdf_link = 'books/'+random_num+1+'.jpg';
   }
 
-   con.query('insert into books(name,descc,image,link,price) values(?,?,?,?,?)',[name,desc,image_link,pdf_link,price],function(err,ress){
+   con.query('insert into books(name,descc,image,link,price,author_name) values(?,?,?,?,?,?)',[name,desc,image_link,pdf_link,price,author_name],function(err,ress){
      if(err){
        res.send(err);
      }
