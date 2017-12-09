@@ -140,9 +140,9 @@ $(".edit").click(function(){
 
                       <% data.forEach(function(user){ %>
                         <tr>
-                          <td><%= user['name']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="name"></i></td>
-                          <td><%= user['email']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="email"></i></td>
-                          <td><%= user['message']  %> <i id="<%= user['id']  %>"  what="password" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
+                          <td><%= user['name']  %> </td>
+                          <td><%= user['email']  %> </td>
+                          <td><%= user['message']  %> </td>
                            </tr>
                      <% }); %>
 

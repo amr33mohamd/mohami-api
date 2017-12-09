@@ -1,4 +1,4 @@
-app.get('/api/buy',function(req,res){
+app.get('/buy-first',function(req,res){
   var book_id = req.param('book_id');
   var user_id = req.param('user_id');
   sql.select('books','id',book_id,function(book){

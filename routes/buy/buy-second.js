@@ -1,10 +1,10 @@
-app.get('/api/buy-second',function(req,res){
+app.get('/buy-second',function(req,res){
   var book_id = req.param('book_id');
-  var amount = req.param('amount');
   var user_id = req.param('user_id');
+  var method = req.param('method');
+  
   sql.select('books','id',book_id,function(book) {
-    if(book[0].price == amount){
-      con.query('insert into orders(user_id,book_id,method,status) values(?,?,?,0)',[],function(err,ress){
+      con.query('insert into orders(user_id,book_id,method,status) values(?,?,?,0)',[user_id,book_id,method],function(err,ress){
         if(err){
           res.send(err);
         }
@@ -12,9 +12,5 @@ app.get('/api/buy-second',function(req,res){
           res.send('Done please click on X up there.');
         }
       })
-    }
-    else {
-      res.send('You are cheating and we got you :D. a messange was sent to us with all your info.');
-    }
   })
 })
