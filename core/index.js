@@ -19,9 +19,9 @@ app.use(bodyParser.json());
 
 app.use(fileUpload());
   con = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "",
+  host: "178.62.17.251",
+  user: "amr",
+  password: "BeRichToGetABitch",
   database:"mydb",
 
   });
