@@ -16,7 +16,7 @@ app.get('/api/signup',function(req,res){
         }
         else
         {
-            con.query('INSERT INTO users(name,email,password,address,currency) values(?,?,?,?,0)',
+            con.query('INSERT INTO users(name,email,password,address,currency,MyLibraryBooksIDs) values(?,?,?,?,0)',
                 [username,email,hash,address], function(err,data) {
                 if(!err) {
 
