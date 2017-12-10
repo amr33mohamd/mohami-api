@@ -3,7 +3,7 @@
     <script src="http://www.paypalobjects.com/js/external/paypal-button.min.js"></script>
   </head>
   <body>
-    
+
 
     <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 
@@ -15,9 +15,9 @@
 
       <!-- Specify details about the item that buyers will purchase. -->
       <input type="hidden" name="item_name" value="Hot Sauce-12oz. Bottle">
-      <input type="hidden" name="amount" value="<%= book.price %>">
+      <input type="hidden" name="amount" value="<%= price %>">
       <input type="hidden" name="currency_code" value="USD">
-      <input type="hidden" name="return" value="http://<%= domain %>/buy-second?book_id=<%= book.id %>&user_id=<%= user.id %>">
+      <input type="hidden" name="return" value="http://<%= domain %>/buy-second?book_id=<%= book.id %>&user_id=<%= user.id%>&method=<%= method %>">
       <!-- Display the payment button. -->
       <input type="image" name="submit" border="0"
       src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_buynow_107x26.png"
