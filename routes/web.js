@@ -335,7 +335,7 @@ app.post('/add_book',function(req,res){
            })
          });
        }
-       res.send('domain'+domain)
+       res.redirect('/add-books');
      }
 
    })
