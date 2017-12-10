@@ -16,8 +16,8 @@ app.get('/api/signup',function(req,res){
         }
         else
         {
-            con.query('INSERT INTO users(name,email,password,address,currency,MyLibraryBooksIDs) values(?,?,?,?,0,'')',
-                [username,email,hash,address], function(err,data) {
+            con.query('INSERT INTO users(name,email,password,address,currency,MyLibraryBooksIDs) values(?,?,?,?,?,?)',
+                [username,email,hash,address, 0, ""], function(err,data) {
                 if(!err) {
 
                     con.query('SELECT LAST_INSERT_ID() AS user_id', function(err,data) {
