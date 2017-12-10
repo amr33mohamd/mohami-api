@@ -11,8 +11,8 @@ app.get('/buy-first',function(req,res){
         else{
           const converter = require('google-currency');
           converter({
-              from: "USD",
-              to: "SAR",
+              from: "SAR",
+              to: "USD",
               amount: book[0]['price']
           }).then(value => {
 
