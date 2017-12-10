@@ -275,6 +275,7 @@ app.post('/add_book',function(req,res){
    var desc = req.body.desc;
    var author_name = req.body.authorname;
    var pdf = req.files.pdf || null;
+   var domain = 'http://'+ req.get('host');
    var price = req.body.price || null;
    var shot1 = req.files.shot1 || null;
    var shot2 = req.files.shot2 || null;
@@ -294,11 +295,11 @@ app.post('/add_book',function(req,res){
     var pdf_link = '';
   }
   else{
-    var pdf_link = 'books/'+random_num+1+'.jpg';
+    var pdf_link = domain+'/books/'+random_num+1+'.jpg';
   }
 
 
-   con.query('insert into books(name,descc,image,link,price,author_name,category_id,sub_category_id) values(?,?,?,?,?,?,?,?)',[name,desc,'images/'+random_num+'.jpg',pdf_link,price,author_name,category_id,sub_category_id],function(err,ress){
+   con.query('insert into books(name,descc,image,link,price,author_name,category_id,sub_category_id) values(?,?,?,?,?,?,?,?)',[name,desc,domain+'/images/'+random_num+'.jpg',pdf_link,price,author_name,category_id,sub_category_id],function(err,ress){
      if(err){
        res.send(err);
      }
@@ -307,7 +308,7 @@ app.post('/add_book',function(req,res){
        if(shot1 != null){
          shot1.mv('images/'+random_num+2+'.jpg', function(err) {
 
-           con.query('insert into screenshots(name,book_id) values(?,?)',['images/'+random_num+2+'.jpg',inserted_id],function(err,resss){
+           con.query('insert into screenshots(name,book_id) values(?,?)',[domain+'/images/'+random_num+2+'.jpg',inserted_id],function(err,resss){
            })
          });
        }
@@ -315,7 +316,7 @@ app.post('/add_book',function(req,res){
        if(shot2 != null){
          shot2.mv('images/'+random_num+3+'.jpg', function(err) {
 
-           con.query('insert into screenshots(name,book_id) values(?,?)',['images/'+random_num+3+'.jpg',inserted_id],function(err,aresss){
+           con.query('insert into screenshots(name,book_id) values(?,?)',[domain+'/images/'+random_num+3+'.jpg',inserted_id],function(err,aresss){
            })
          });
        }
@@ -323,18 +324,18 @@ app.post('/add_book',function(req,res){
        if(shot3 != null){
          shot3.mv('images/'+random_num+4+'.jpg', function(err) {
 
-           con.query('insert into screenshots(name,book_id) values(?,?)',['images/'+random_num+4+'.jpg',inserted_id],function(err,bresss){
+           con.query('insert into screenshots(name,book_id) values(?,?)',[domain+'/images/'+random_num+4+'.jpg',inserted_id],function(err,bresss){
            })
          });
        }
 
        if(shot4 != null){
          shot4.mv('images/'+random_num+5+'.jpg', function(err) {
-           con.query('insert into screenshots(name,book_id) values(?,?)',['images/'+random_num+5+'.jpg',inserted_id],function(err,dbresss){
+           con.query('insert into screenshots(name,book_id) values(?,?)',[domain+'/images/'+random_num+5+'.jpg',inserted_id],function(err,dbresss){
            })
          });
        }
-       res.redirect('/add-books');
+       res.send('domain'+domain)
      }
 
    })
