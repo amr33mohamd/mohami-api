@@ -273,6 +273,7 @@ app.post('/add_book',function(req,res){
    var sub_category_id = req.body.sub_category;
    var name = req.body.name;
    var desc = req.body.desc;
+   var fake_price = req.body.fakeprice || 0;
    var author_name = req.body.authorname;
    var pdf = req.files.pdf || null;
    var domain = 'http://'+ req.get('host');
@@ -299,7 +300,7 @@ app.post('/add_book',function(req,res){
   }
 
 
-   con.query('insert into books(name,descc,image,link,price,author_name,category_id,sub_category_id) values(?,?,?,?,?,?,?,?)',[name,desc,domain+'/images/'+random_num+'.jpg',pdf_link,price,author_name,category_id,sub_category_id],function(err,ress){
+   con.query('insert into books(name,descc,image,link,price,author_name,category_id,sub_category_id,fake_price) values(?,?,?,?,?,?,?,?,?)',[name,desc,domain+'/images/'+random_num+'.jpg',pdf_link,price,author_name,category_id,sub_category_id,fake_price],function(err,ress){
      if(err){
        res.send(err);
      }
