@@ -13,7 +13,7 @@ app.get('/buy-first',function(req,res){
           converter({
               from: "SAR",
               to: "USD",
-              amount: book[0]['price']
+              amount: (book[0]['fake_price'] > 0) ? book[0]['fake_price'] : book[0]['price']
           }).then(value => {
 
               res.render('buy-first',{
