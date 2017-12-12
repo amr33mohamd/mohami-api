@@ -1,7 +1,7 @@
 app.get('/api/homescreen',function(req,res){
 
   data = [];
-  con.query('SELECT id, name FROM categories ORDER BY id ASC', function(err,data) {
+  con.query('SELECT id, name FROM categories ORDER BY id ASC', function(err,categories) {
       if(!err) {
           for(let counter in categories){
             con.query("SELECT id AS book_ID, name AS book_name, image AS book_photo, author_name FROM books WHERE category_id=? ORDER BY id DESC LIMIT 3",
