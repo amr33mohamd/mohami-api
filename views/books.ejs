@@ -28,16 +28,17 @@ var table = $('#datatable-buttons').DataTable();
    })
 
 $(".edit").click(function(){
+console.log('aaaa');
  var id = $(this).attr('id');
  var new_name = prompt('تريد تغيره الى ماذا ؟');
  var what = $(this).attr('what');
  if(new_name != null){
-   $.get('/change',{
+   $.get('/change-book',{
        id,
        new_name,
        what
      },function(data){
-       window.location = '/users';
+       window.location = '/books';
      })
  }
 })
@@ -132,7 +133,7 @@ $(".edit").click(function(){
                         <th>المنف الفرعي</th>
                         <th>التحميلات</th>
                         <th>رابط التحميل</th>
-                        <th>السعر بالدولار</th>
+                        <th> السعر بالريال</th>
 
                         <th>حذف</th>
 
@@ -145,13 +146,13 @@ $(".edit").click(function(){
                       <% users.forEach(function(user){ %>
                         <tr>
                           <td><%= user['name']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="name"></i></td>
-                          <td><%= user['category_id']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="email"></i></td>
-                          <td><%= user['sub_category_id']  %> <i id="<%= user['id']  %>"  what="password" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
+                          <td><%= user['category_id']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="category_id"></i></td>
+                          <td><%= user['sub_category_id']  %> <i id="<%= user['id']  %>"  what="sub_category_id" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
                           <td><%= user['downloads']  %> <i id="<%= user['id']  %>"  what="downloads" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
 
-                          <td><%= user['link'] %> </td>
+                          <td><%= user['descc'] %> <i id="<%= user['id']  %>"  what="descc" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
 
-                          <td><%= user['price'] %></td>
+                          <td><%= user['price'] %> <i id="<%= user['id']  %>"  what="price" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
 
 
 

@@ -142,12 +142,12 @@ app.post('/add_subcategory',function(req,res){
    var name = req.body.name;
    var category = req.body.category;
 
-   con.query('insert into sub_categories(name,parent_category_id) values(?,?)',[name,category],function(err,res){
+   con.query('insert into sub_categories(name,parent_category_id) values(?,?)',[name,category],function(err,ress){
      if(err){
        res.send(err);
      }
      else{
-       res.send('done .....');
+       res.redirect('/add-subcategories');
      }
    })
 });
@@ -228,9 +228,15 @@ function FormatOrders(unformatted_orders, callback)
 app.get('/orders',function(req,res){
     session.startSession(req, res,function() {
         sql.select('orders','1','1',function(unformatted_orders) {
+          if(unformatted_orders.length == 0){
+            res.send('we checked your orders and there are still no orders');
+          }
+          else{
             FormatOrders(unformatted_orders, function (orders) {
                 res.render('orders', {orders});
             });
+          }
+
         });
     });
 });
@@ -251,6 +257,7 @@ app.get('/books',function(req,res){
   session.startSession(req, res,function(){
     sql.select('books','1','1',function(data){
         	res.render('books',{users:data});
+          console.log(data);
     });
 });
 });
@@ -425,6 +432,15 @@ app.get('/change',function(req,res){
 	var what = req.param('what');
 	var new_name = req.param('new_name');
 	sql.update('users',what,new_name,'id',id,function(data){
+		res.send(data);
+	});
+});
+
+app.get('/change-book',function(req,res){
+	var id = req.param('id');
+	var what = req.param('what');
+	var new_name = req.param('new_name');
+	sql.update('books',what,new_name,'id',id,function(data){
 		res.send(data);
 	});
 });
