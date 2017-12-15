@@ -3,7 +3,7 @@
    app = express();
   var mysql = require('mysql');
    port = process.env.PORT || 80;
-
+Jimp = require("jimp");
      addSubtractDate = require("add-subtract-date");
     moment = require('moment');
 moment().format('L');
@@ -19,9 +19,9 @@ app.use(bodyParser.json());
 
 app.use(fileUpload());
   con = mysql.createConnection({
-  host: "178.62.17.251",
-  user: "amr",
-  password: "BeRichToGetABitch",
+  host: "localhost",
+  user: "root",
+  password: "",
   database:"mydb",
 
   });

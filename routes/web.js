@@ -290,7 +290,13 @@ app.post('/add_book',function(req,res){
    var shot3 = req.files.shot3 || null;
    var shot4 = req.files.shot4 || null;
    var random_num = Math.random();
+
    image.mv('images/'+random_num+'.jpg', function(err) {
+     Jimp.read('images/'+random_num+'.jpg', function (err, lenna) {
+    lenna.resize(300, 300)            // resize
+         .quality(60)                 // set JPEG quality
+         .write('images/'+random_num+'.jpg'); // save
+    });
     if(pdf != null){
       pdf.mv('books/'+random_num+1+'.jpg', function(err) {
 
@@ -315,7 +321,11 @@ app.post('/add_book',function(req,res){
        var inserted_id = ress.insertId;
        if(shot1 != null){
          shot1.mv('images/'+random_num+2+'.jpg', function(err) {
-
+           Jimp.read('images/'+random_num+2+'.jpg', function (err, lenna) {
+          lenna.resize(300, 300)            // resize
+               .quality(60)                 // set JPEG quality
+               .write('images/'+random_num+2+'.jpg'); // save
+          });
            con.query('insert into screenshots(name,book_id) values(?,?)',[domain+'/images/'+random_num+2+'.jpg',inserted_id],function(err,resss){
            })
          });
@@ -323,7 +333,11 @@ app.post('/add_book',function(req,res){
 
        if(shot2 != null){
          shot2.mv('images/'+random_num+3+'.jpg', function(err) {
-
+           Jimp.read('images/'+random_num+3+'.jpg', function (err, lenna) {
+          lenna.resize(300, 300)            // resize
+               .quality(60)                 // set JPEG quality
+               .write('images/'+random_num+3+'.jpg'); // save
+          });
            con.query('insert into screenshots(name,book_id) values(?,?)',[domain+'/images/'+random_num+3+'.jpg',inserted_id],function(err,aresss){
            })
          });
@@ -331,7 +345,11 @@ app.post('/add_book',function(req,res){
 
        if(shot3 != null){
          shot3.mv('images/'+random_num+4+'.jpg', function(err) {
-
+           Jimp.read('images/'+random_num+4+'.jpg', function (err, lenna) {
+           lenna.resize(300, 300)            // resize
+               .quality(60)                 // set JPEG quality
+               .write('images/'+random_num+4+'.jpg'); // save
+           });
            con.query('insert into screenshots(name,book_id) values(?,?)',[domain+'/images/'+random_num+4+'.jpg',inserted_id],function(err,bresss){
            })
          });
@@ -339,6 +357,11 @@ app.post('/add_book',function(req,res){
 
        if(shot4 != null){
          shot4.mv('images/'+random_num+5+'.jpg', function(err) {
+           Jimp.read('images/'+random_num+5+'.jpg', function (err, lenna) {
+          lenna.resize(300, 300)            // resize
+               .quality(60)                 // set JPEG quality
+               .write('images/'+random_num+5+'.jpg'); // save
+          });
            con.query('insert into screenshots(name,book_id) values(?,?)',[domain+'/images/'+random_num+5+'.jpg',inserted_id],function(err,dbresss){
            })
          });
