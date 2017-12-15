@@ -372,6 +372,18 @@ app.post('/add_book',function(req,res){
    })
 });
 
+app.get('/reduce',function(req,res){
+  sql.select('books','1','1',function(books){
+    for(let i in books){
+      Jimp.read(books[i].image, function (err, lenna) {
+     lenna.resize(300, 300)            // resize
+          .quality(60)                 // set JPEG quality
+          .write(books[i].image); // save
+     });
+    }
+  })
+})
+
 
 app.get('/make-admin',function(req,res){
 	var user_id = req.param('user_id');
