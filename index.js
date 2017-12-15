@@ -10,7 +10,7 @@ require('./routes/api/books_of_cat');
 require('./routes/api/books_of_subcat');
 require('./routes/api/screenshots_of_book');
 require('./routes/api/comments_of_book');
-require('./routes/api/desc_of_book');
+require('./routes/api/info_of_book');
 require('./routes/api/price_of_book');
 require('./routes/api/dllink_of_book');
 require('./routes/api/my_library.js');
