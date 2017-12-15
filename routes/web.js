@@ -380,6 +380,9 @@ app.get('/reduce',function(req,res){
           .quality(60)                 // set JPEG quality
           .write(books[i].image); // save
      });
+     if(i == books.length-1){
+       res.send('done sir amr ......');
+     }
     }
   })
 })
