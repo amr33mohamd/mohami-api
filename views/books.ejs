@@ -129,38 +129,30 @@ console.log('aaaa');
                     <thead>
                       <tr>
                         <th>الاسم</th>
-                        <th>الصنف الرئيسى</th>
-                        <th>المنف الفرعي</th>
-                        <th>التحميلات</th>
                         <th>الوصف</th>
                         <th> السعر بالريال</th>
-
+                        <th> السعر قبل الخصم</th>
+                        <th>عدد الصفحات </th>
+                        <th>غلاف الكتاب</th>
+                        <th>العرض</th>
+                        <th>الارتفاع</th>
                         <th>حذف</th>
-
+                        <th>تعديل الصور</th>
                       </tr>
                     </thead>
-
-
                     <tbody>
-
                       <% users.forEach(function(user){ %>
                         <tr>
                           <td><%= user['name']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="name"></i></td>
-                          <td><%= user['category_id']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="category_id"></i></td>
-                          <td><%= user['sub_category_id']  %> <i id="<%= user['id']  %>"  what="sub_category_id" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
-                          <td><%= user['downloads']  %> <i id="<%= user['id']  %>"  what="downloads" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
-
                           <td><%= user['descc'] %> <i id="<%= user['id']  %>"  what="descc" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
-
                           <td><%= user['price'] %> <i id="<%= user['id']  %>"  what="price" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
-
-
-
+                          <td><%= user['fake_price'] %> <i id="<%= user['id']  %>"  what="fake_price" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
+                          <td><%= user['pagesnum'] %> <i id="<%= user['id']  %>"  what="pagesnum" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
+                          <td><%= user['binding'] %> <i id="<%= user['id']  %>"  what="binding" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
+                          <td><%= user['width'] %> <i id="<%= user['id']  %>"  what="width" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
+                          <td><%= user['height'] %> <i id="<%= user['id']  %>"  what="height" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
                           <td><a style="color:red" href="/delete-book?id=<%= user['id'] %>" onclick="return confirm('هل تريد حذف هذا الكتاب حقا !');">X</a></td>
-
-
-
-
+                          <td><a href="/edit-book-images?id=<%= user['id'] %>"><i  class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
                            </tr>
                      <% }); %>
 

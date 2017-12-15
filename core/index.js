@@ -15,13 +15,13 @@ moment().format('L');
    var bodyParser=  require("body-parser");
    app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+fs = require('fs');
 
 app.use(fileUpload());
   con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "BeRichToGetABitch",
+  password: "",
   database:"mydb",
 
   });

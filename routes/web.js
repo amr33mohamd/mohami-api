@@ -257,7 +257,7 @@ app.get('/books',function(req,res){
   session.startSession(req, res,function(){
     sql.select('books','1','1',function(data){
         	res.render('books',{users:data});
-          console.log(data);
+
     });
 });
 });
@@ -280,6 +280,13 @@ app.post('/add_book',function(req,res){
    var sub_category_id = req.body.sub_category;
    var name = req.body.name;
    var desc = req.body.desc;
+
+var height = req.body.height;
+var width = req.body.width;
+var pagesnum = req.body.pagesnum;
+var binding = req.body.binding;
+
+
    var fake_price = req.body.fakeprice || 0;
    var author_name = req.body.authorname;
    var pdf = req.files.pdf || null;
@@ -313,7 +320,7 @@ app.post('/add_book',function(req,res){
   }
 
 
-   con.query('insert into books(name,descc,image,link,price,author_name,category_id,sub_category_id,fake_price) values(?,?,?,?,?,?,?,?,?)',[name,desc,domain+'/images/'+random_num+'.jpg',pdf_link,price,author_name,category_id,sub_category_id,fake_price],function(err,ress){
+   con.query('insert into books(name,descc,image,link,price,author_name,category_id,sub_category_id,fake_price,height,width,pagesnum,binding) values(?,?,?,?,?,?,?,?,?,?,?,?,?)',[name,desc,domain+'/images/'+random_num+'.jpg',pdf_link,price,author_name,category_id,sub_category_id,fake_price,height,width,pagesnum,binding],function(err,ress){
      if(err){
        res.send(err);
      }
@@ -425,6 +432,94 @@ app.get('/block',function(req,res){
 		}
 	});
 });
+
+app.get('/edit-book-images',function(req,res){
+  var id = req.param('id');
+  sql.select('books','id',id,function(book){
+    sql.select('screenshots','book_id',id,function(screenshots){
+      res.render('edit-book-images',{book,screenshots});
+
+    })
+  })
+});
+
+app.get('/delete-screen',function(req,res){
+  var id = req.param('id');
+  var book_id = req.param('book_id');
+  sql.select('screenshots','id',id,function(screen){
+    let full_dir = screen[0].name;
+    let name_array = full_dir.split('/');
+    let new_dir = name_array[3]+'/'+name_array[4];
+    fs.unlinkSync(new_dir);
+    sql.delete('screenshots','id',id,function(ress){
+      if(ress){
+        res.redirect('/edit-book-images?id='+book_id);
+      }
+      else{
+        res.send('some thing wrong plaese contact programmer');
+      }
+    })
+  })
+})
+
+
+app.post('/add_screen',function(req,res){
+  var random_num = Math.random();
+  var book_id = req.body.book_id;
+  var shot4 = req.files.image;
+  var domain = 'http://'+ req.get('host');
+  shot4.mv('images/'+random_num+6+'.jpg', function(err) {
+    Jimp.read('images/'+random_num+6+'.jpg', function (err, lenna) {
+   lenna.resize(300, 300)            // resize
+        .quality(60)                 // set JPEG quality
+        .write('images/'+random_num+6+'.jpg'); // save
+   });
+    con.query('insert into screenshots(name,book_id) values(?,?)',[domain+'/images/'+random_num+6+'.jpg',book_id],function(err,dbresss){
+      if(err){
+        res.send(err)
+      }
+      else{
+        res.redirect('/edit-book-images?id='+book_id);
+      }
+    })
+  });
+
+});
+
+
+app.post('/change-image',function(req,res){
+  var random_num = Math.random();
+  var book_id = req.body.book_id;
+  var shot4 = req.files.image;
+  var domain = 'http://'+ req.get('host');
+
+  sql.select('books','id',book_id,function(book){
+    let full_dir = book[0].image;
+    let name_array = full_dir.split('/');
+    let new_dir = name_array[3]+'/'+name_array[4];
+    if(fs.unlinkSync(new_dir) == null){
+      sql.update('books','image',domain+'/images/'+random_num+7+'.jpg','id',book_id,function(ress){
+        if(ress){
+          res.redirect('/edit-book-images?id='+book_id);
+        }
+        else{
+          res.send('some thing wrong plaese contact programmer');
+        }
+      })
+    }
+  });
+
+
+
+  shot4.mv('images/'+random_num+7+'.jpg', function(err) {
+    Jimp.read('images/'+random_num+7+'.jpg', function (err, lenna) {
+   lenna.resize(300, 300)            // resize
+        .quality(60)                 // set JPEG quality
+        .write('images/'+random_num+7+'.jpg'); // save
+   });
+    })
+  });
+
 
 
 app.get('/delete-user',function(req,res){
@@ -756,7 +851,7 @@ app.get('/api/interestsscreen',function(req,res){
 app.get('/api/search',function(req,res){
 	var name = req.param('name');
 	sql.lselect('users','name',name,function(data1){
-		 console.log(data1);
+
 		if(data1.length != 0){
 
 			var single = [];
