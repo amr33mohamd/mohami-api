@@ -4,8 +4,12 @@ app.get('/',function(req,res){
 app.get('/login',function(req,response){
   var email = req.param('email');
   var password = req.param('password');
+
+  var crypto = require('crypto');
+  var hash = crypto.createHash('md5').update(password).digest("hex");
+
   var sql = "select * from users where email = ? and password = ? and rule = ?";
-  con.query(sql,[email,password,1],function(err, res){
+  con.query(sql,[email,hash,1],function(err, res){
     if(res.length == 0){
       response.redirect('/');
     }
