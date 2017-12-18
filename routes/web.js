@@ -540,22 +540,21 @@ app.get('/delete-book',function(req,res){
 		if(data)
         {
             sql.delete('my_library','book_id',book_id,function(reso) {
-                if(data)
+                if(reso)
                 {
                     con.query('SELECT id, MyLibraryBooksIDs FROM users WHERE MyLibraryBooksIDs LIKE ?', ['%'+book_id+'%'], function(err,user){
                         if(!err) {
-                            var updateLibrary = user['MyLibraryBooksIDs'].replace(String(book_id), "");
-                            updateLibrary = updateLibrary.replace(",,", ",");
-                            if(updateLibrary[0] == ',') updateLibrary = updateLibrary.slice(1);
-                            if(updateLibrary[updateLibrary.length-1] == ',') updateLibrary = updateLibrary.slice(0, -1);
-                            con.query('update users set MyLibraryBooksIDs=? where id=?',[updateLibrary, user['id']],function(err,ress) {
-                                if(err)
-                                {
-                                    res.redirect('/books');
+                            for(let i in user) {
+                                var updateLibrary = user[i]['MyLibraryBooksIDs'].replace(String(book_id), "");
+                                updateLibrary = updateLibrary.replace(",,", ",");
+                                if(updateLibrary[0] == ',') updateLibrary = updateLibrary.slice(1);
+                                if(updateLibrary[updateLibrary.length-1] == ',') updateLibrary = updateLibrary.slice(0, -1);
+                                con.query('update users set MyLibraryBooksIDs=? where id=?',[updateLibrary, user[i]['id']],function(err,ress) {});
+
+                                if(i == user.length-1){
+                                  res.redirect('/books');
                                 }
-                                else
-                                    res.send('error updating my library of users while deleting that book');
-                            });
+                            }
                         }
                     });
                 }
