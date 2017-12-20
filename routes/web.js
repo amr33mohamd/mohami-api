@@ -4,8 +4,12 @@ app.get('/',function(req,res){
 app.get('/login',function(req,response){
   var email = req.param('email');
   var password = req.param('password');
+
+  var crypto = require('crypto');
+  var hash = crypto.createHash('md5').update(password).digest("hex");
+
   var sql = "select * from users where email = ? and password = ? and rule = ?";
-  con.query(sql,[email,password,1],function(err, res){
+  con.query(sql,[email,hash,1],function(err, res){
     if(res.length == 0){
       response.redirect('/');
     }
@@ -540,10 +544,30 @@ app.get('/delete-user',function(req,res){
 });
 
 app.get('/delete-book',function(req,res){
-	var user_id = req.param('id');
-	sql.delete('books','id',user_id,function(data){
-		if(data){
-			res.redirect('/books');
+	var book_id = req.param('id');
+	sql.delete('books','id',book_id,function(data){
+		if(data)
+        {
+            sql.delete('my_library','book_id',book_id,function(reso) {
+                if(reso)
+                {
+                    con.query('SELECT id, MyLibraryBooksIDs FROM users WHERE MyLibraryBooksIDs LIKE ?', ['%'+book_id+'%'], function(err,user){
+                        if(!err) {
+                            for(let i in user) {
+                                var updateLibrary = user[i]['MyLibraryBooksIDs'].replace(String(book_id), "");
+                                updateLibrary = updateLibrary.replace(",,", ",");
+                                if(updateLibrary[0] == ',') updateLibrary = updateLibrary.slice(1);
+                                if(updateLibrary[updateLibrary.length-1] == ',') updateLibrary = updateLibrary.slice(0, -1);
+                                con.query('update users set MyLibraryBooksIDs=? where id=?',[updateLibrary, user[i]['id']],function(err,ress) {});
+
+                                if(i == user.length-1){
+                                  res.redirect('/books');
+                                }
+                            }
+                        }
+                    });
+                }
+            });
 		}
 		else{
 			res.send('please contact programmer if you got that error again');
