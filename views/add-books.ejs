@@ -210,7 +210,7 @@ $(".edit").click(function(){
                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">التصنيف الاساسي <span class="required">*</span>
                        </label>
                        <div class="col-md-6 col-sm-6 col-xs-12">
-                         <select class="form-control col-md-7 col-xs-12" name="category">
+                         <select id="category" class="form-control col-md-7 col-xs-12" name="category">
                            <%  categories.forEach(function(category){ %>
                            <option value="<%= category['id'] %>"><%= category['name'] %></option>
                            <% }) %>
@@ -224,14 +224,30 @@ $(".edit").click(function(){
                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">التصنيف الفرعي<span class="required">*</span>
                        </label>
                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control col-md-7 col-xs-12" name="sub_category">
+                          <select class="form-control col-md-7 col-xs-12" id="sub" name="sub_category">
                             <%  sub_categories.forEach(function(sub_category){ %>
                             <option value="<%= sub_category['id'] %>"><%= sub_category['name'] %></option>
                             <% }) %>
                           </select>
                        </div>
                      </div>
+<script>
 
+$(document).ready(function(){
+  $("#category").change(function(){
+
+    $.get("/api/sub_categories",{
+      parent_cat_id: document.getElementById("category").value,
+    },function(data){
+      $('#sub').empty();
+      for(let i in data){
+        $('#sub').append($("<option></option>").attr("value",data[i].id).text(data[i].name));
+      }
+    })
+  })
+})
+
+</script>
 
                      <div class="form-group">
                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">صوره للكتاب *<span class="required">*</span>

@@ -20,6 +20,11 @@ app.get('/login',function(req,response){
   });
 });
 
+app.get('/sdsa',function(req,res){
+
+})
+
+
 
 
 //full admin control -------------->
