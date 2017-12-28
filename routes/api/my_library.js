@@ -51,6 +51,7 @@ app.get('/api/add-my-library',function(req,res){
 
 app.get('/api/show-my-library',function(req,res){
   var user_id = req.param('user_id');
+
   sql.select('my_library','user_id',user_id,function(library){
     if(library.length == 0){
       res.json({status:0});
@@ -60,6 +61,7 @@ app.get('/api/show-my-library',function(req,res){
 
       for(let counter in library){
         con.query('select id, name AS book_name, image AS book_photo, author_name FROM books WHERE id=?',[library[counter]['book_id']],function(err,book){
+
             if(book !== undefined && book.length > 0)
             {
           data.push({
@@ -68,6 +70,7 @@ app.get('/api/show-my-library',function(req,res){
             book_photo : book[0]['book_photo'],
             author_name : book[0]['author_name']
           });
+
           if(counter == library.length-1){
             res.json({
               status:1,
