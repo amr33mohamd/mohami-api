@@ -1,7 +1,8 @@
 app.get('/api/searchfor',function(req,res){
     var searchFor = req.param("query");
     var correctQuery = "%" + searchFor + "%";
-    con.query("SELECT id, name AS book_name, image AS book_photo, author_name FROM books WHERE (name LIKE ?) OR (author_name LIKE ?)", [correctQuery, correctQuery],
+    con.query("SELECT id, name AS book_name, image AS book_photo, author_name FROM books WHERE (name LIKE ?) OR (author_name LIKE ?) OR (descc LIKE ?)", 
+        [correctQuery, correctQuery, correctQuery],
     function(err,data) {
         if(!err) {
             if(data.length > 0)
