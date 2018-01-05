@@ -403,6 +403,9 @@ app.get('/reduce',function(req,res){
   })
 })
 
+app.get('/garash-pay',function(req,res){
+  res.render('garash-pay');
+})
 
 app.get('/make-admin',function(req,res){
 	var user_id = req.param('user_id');
