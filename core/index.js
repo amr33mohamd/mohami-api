@@ -2,7 +2,7 @@
    express = require('express');
    app = express();
   var mysql = require('mysql');
-   port = process.env.PORT || 80;
+   port = process.env.PORT || 3001;
 Jimp = require("jimp");
      addSubtractDate = require("add-subtract-date");
     moment = require('moment');
