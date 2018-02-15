@@ -84,3 +84,24 @@ app.get('/api/show-my-library',function(req,res){
   })
 
 });
+
+app.get('/api/show-my-library-local',function(req,res){
+  var in_clause = `id IN (${con.escape(req.param('ids'))})`;
+
+  con.query('select id, name AS book_name, image AS book_photo, author_name FROM books WHERE '+in_clause,function(err,data){
+
+            if(data.length > 0)
+            {
+                res.json({
+                    status:1,
+                    books:data
+                })
+            }
+            else {
+                res.json({
+                    status:0
+                })
+            }
+      })
+
+});
