@@ -86,8 +86,8 @@ app.get('/api/show-my-library',function(req,res){
 });
 
 app.get('/api/show-my-library-local',function(req,res){
-  var in_clause = `id IN (${con.escape(req.param('ids'))})`;
-
+    var ids = con.escape(req.param('ids'));
+  var in_clause = `id IN (${ids.substring(1, ids.length-1)})`;
   con.query('select id, name AS book_name, image AS book_photo, author_name FROM books WHERE '+in_clause,function(err,data){
 
             if(data.length > 0)
