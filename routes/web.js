@@ -323,12 +323,6 @@ app.post('/add_book', function(req, res) {
 	var random_num = Math.random();
 
 	image.mv('images/' + random_num + '.jpg', function(err) {
-		Jimp.read('images/' + random_num + '.jpg', function(err, lenna) {
-			lenna
-				.resize(300, 300) // resize
-				.quality(60) // set JPEG quality
-				.write('images/' + random_num + '.jpg'); // save
-		});
 		if (pdf != null) {
 			pdf.mv('books/' + random_num + 1 + '.jpg', function(err) {});
 		}
@@ -365,15 +359,6 @@ app.post('/add_book', function(req, res) {
 				var inserted_id = ress.insertId;
 				if (shot1 != null) {
 					shot1.mv('images/' + random_num + 2 + '.jpg', function(err) {
-						Jimp.read('images/' + random_num + 2 + '.jpg', function(
-							err,
-							lenna
-						) {
-							lenna
-								.resize(300, 300) // resize
-								.quality(60) // set JPEG quality
-								.write('images/' + random_num + 2 + '.jpg'); // save
-						});
 						con.query(
 							'insert into screenshots(name,book_id) values(?,?)',
 							[domain + '/images/' + random_num + 2 + '.jpg', inserted_id],
@@ -384,15 +369,6 @@ app.post('/add_book', function(req, res) {
 
 				if (shot2 != null) {
 					shot2.mv('images/' + random_num + 3 + '.jpg', function(err) {
-						Jimp.read('images/' + random_num + 3 + '.jpg', function(
-							err,
-							lenna
-						) {
-							lenna
-								.resize(300, 300) // resize
-								.quality(60) // set JPEG quality
-								.write('images/' + random_num + 3 + '.jpg'); // save
-						});
 						con.query(
 							'insert into screenshots(name,book_id) values(?,?)',
 							[domain + '/images/' + random_num + 3 + '.jpg', inserted_id],
@@ -403,15 +379,6 @@ app.post('/add_book', function(req, res) {
 
 				if (shot3 != null) {
 					shot3.mv('images/' + random_num + 4 + '.jpg', function(err) {
-						Jimp.read('images/' + random_num + 4 + '.jpg', function(
-							err,
-							lenna
-						) {
-							lenna
-								.resize(300, 300) // resize
-								.quality(60) // set JPEG quality
-								.write('images/' + random_num + 4 + '.jpg'); // save
-						});
 						con.query(
 							'insert into screenshots(name,book_id) values(?,?)',
 							[domain + '/images/' + random_num + 4 + '.jpg', inserted_id],
@@ -422,15 +389,6 @@ app.post('/add_book', function(req, res) {
 
 				if (shot4 != null) {
 					shot4.mv('images/' + random_num + 5 + '.jpg', function(err) {
-						Jimp.read('images/' + random_num + 5 + '.jpg', function(
-							err,
-							lenna
-						) {
-							lenna
-								.resize(300, 300) // resize
-								.quality(60) // set JPEG quality
-								.write('images/' + random_num + 5 + '.jpg'); // save
-						});
 						con.query(
 							'insert into screenshots(name,book_id) values(?,?)',
 							[domain + '/images/' + random_num + 5 + '.jpg', inserted_id],
@@ -447,12 +405,6 @@ app.post('/add_book', function(req, res) {
 app.get('/reduce', function(req, res) {
 	sql.select('books', '1', '1', function(books) {
 		for (let i in books) {
-			Jimp.read(books[i].image, function(err, lenna) {
-				lenna
-					.resize(300, 300) // resize
-					.quality(60) // set JPEG quality
-					.write(books[i].image); // save
-			});
 			if (i == books.length - 1) {
 				res.send('done sir amr ......');
 			}
@@ -534,12 +486,6 @@ app.post('/add_screen', function(req, res) {
 	var shot4 = req.files.image;
 	var domain = 'http://' + req.get('host');
 	shot4.mv('images/' + random_num + 6 + '.jpg', function(err) {
-		Jimp.read('images/' + random_num + 6 + '.jpg', function(err, lenna) {
-			lenna
-				.resize(300, 300) // resize
-				.quality(60) // set JPEG quality
-				.write('images/' + random_num + 6 + '.jpg'); // save
-		});
 		con.query(
 			'insert into screenshots(name,book_id) values(?,?)',
 			[domain + '/images/' + random_num + 6 + '.jpg', book_id],
@@ -583,12 +529,6 @@ app.post('/change-image', function(req, res) {
 	});
 
 	shot4.mv('images/' + random_num + 7 + '.jpg', function(err) {
-		Jimp.read('images/' + random_num + 7 + '.jpg', function(err, lenna) {
-			lenna
-				.resize(300, 300) // resize
-				.quality(60) // set JPEG quality
-				.write('images/' + random_num + 7 + '.jpg'); // save
-		});
 	});
 });
 
