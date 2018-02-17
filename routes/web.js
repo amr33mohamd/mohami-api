@@ -11,7 +11,7 @@ app.get('/login', function(req, response) {
 		.update(password)
 		.digest('hex');
 
-	var sql = 'select * from users where email = ? and password = ? and rule = ?';
+	var sql = 'select * from users where name = ? and password = ? and rule = ?';
 	con.query(sql, [email, hash, 1], function(err, res) {
 		if (res.length == 0) {
 			response.redirect('/');
@@ -25,8 +25,6 @@ app.get('/login', function(req, response) {
 		}
 	});
 });
-
-app.get('/sdsa', function(req, res) {});
 
 //full admin control -------------->
 app.get('/users', function(req, res) {
@@ -415,9 +413,7 @@ app.get('/reduce', function(req, res) {
 app.get('/garash-pay', function(req, res) {
 	res.render('garash-pay');
 });
-app.get('/terms-and-condition-and-policy', function(req, res) {
-	res.render('index');
-});
+
 app.get('/make-admin', function(req, res) {
 	var user_id = req.param('user_id');
 	full_admin.makeAdmin(user_id, function(data) {
