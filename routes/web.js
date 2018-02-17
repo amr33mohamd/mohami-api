@@ -20,7 +20,7 @@ app.get('/login', function(req, response) {
 	var sql = 'select * from users where name = ? and password = ? and rule = ?';
 	con.query(sql, [email, hash, 1], function(err, res) {
 		if (res.length == 0) {
-			response.redirect('/');
+			response.redirect('/dashboard');
 		} else {
 			session.startSession(req, response, function() {
 				//fake session ------->
