@@ -77,6 +77,7 @@ app.get('/api/similar_books',function(req,res){
                                         })
                                     }
                                     else res.json({status:0});
+                                });
                             }
                             else res.json({status:0});
                         });
