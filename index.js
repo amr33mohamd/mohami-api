@@ -22,3 +22,4 @@ require('./routes/api/signup');
 require('./routes/api/orders');
 require('./routes/api/search');
 require('./routes/api/add_comment');
+require('./routes/api/feedback');
