@@ -56,15 +56,19 @@ app.get('/api/similar_books',function(req,res){
                     {
                         con.query(`SELECT id, name AS book_name, image AS book_photo, author_name FROM books WHERE category_id=? AND id != ? LIMIT 5`,
                             [bookData[0].category_id, book_id],
-                        function(err,search_res) {
+                        function(err,books_of_same_cat) {
                             if(!err) {
                                 con.query('select name FROM categories WHERE id=? LIMIT 1', [ bookData[0].category_id ], function(err,cat) {
                                     if(!err)
                                     {
                                         data = [];
 
-                                        search_res.forEach(function(asearch_res) {
-                                            data.push({ ...asearch_res, cat_name: cat[0].name });
+                                        data.push({
+                                          id: books_of_same_cat[0]['id'],
+                                          book_name : books_of_same_cat[0]['book_name'],
+                                          book_photo : books_of_same_cat[0]['book_photo'],
+                                          author_name : books_of_same_cat[0]['author_name'],
+                                          cat_name: cat[0]['name']
                                         });
 
                                         res.json({
