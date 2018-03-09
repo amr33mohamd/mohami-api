@@ -60,23 +60,45 @@ app.get('/api/show-my-library',function(req,res){
         data = [];
 
       for(let counter in library){
-        con.query('select id, name AS book_name, image AS book_photo, author_name FROM books WHERE id=?',[library[counter]['book_id']],function(err,book){
+        con.query('select id, name AS book_name, image AS book_photo, author_name, category_id FROM books WHERE id=?',[library[counter]['book_id']],function(err,book){
 
             if(book !== undefined && book.length > 0)
             {
-          data.push({
-            id: book[0]['id'],
-            book_name : book[0]['book_name'],
-            book_photo : book[0]['book_photo'],
-            author_name : book[0]['author_name']
-          });
+                con.query('select name FROM categories WHERE id=? LIMIT 1', [ book[0]['category_id'] ], function(err,cat) {
+                    if(!err && cat.length)
+                    {
+                        data.push({
+                          id: book[0]['id'],
+                          book_name : book[0]['book_name'],
+                          book_photo : book[0]['book_photo'],
+                          author_name : book[0]['author_name'],
+                          cat_name: cat[0]['name']
+                        });
 
-          if(counter == library.length-1){
-            res.json({
-              status:1,
-              books:data
-            })
-          }
+                        if(counter == library.length-1){
+                          res.json({
+                            status:1,
+                            books:data
+                          })
+                        }
+                    }
+                    else {
+                        data.push({
+                          id: book[0]['id'],
+                          book_name : book[0]['book_name'],
+                          book_photo : book[0]['book_photo'],
+                          author_name : book[0]['author_name'],
+                          cat_name: 'غير معرف'
+                        });
+
+                        if(counter == library.length-1){
+                          res.json({
+                            status:1,
+                            books:data
+                          })
+                        }
+                    }
+                });
       }})
 
       }
