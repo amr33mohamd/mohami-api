@@ -59,16 +59,15 @@ app.get('/api/similar_books',function(req,res){
                         function(err,books_of_same_cat) {
                             if(!err) {
                                 con.query('select name FROM categories WHERE id=? LIMIT 1', [ bookData[0].category_id ], function(err,cat) {
-                                    if(!err)
+                                    if(!err && cat.length)
                                     {
                                         data = [];
 
-                                        data.push({
-                                          id: books_of_same_cat[0]['id'],
-                                          book_name : books_of_same_cat[0]['book_name'],
-                                          book_photo : books_of_same_cat[0]['book_photo'],
-                                          author_name : books_of_same_cat[0]['author_name'],
-                                          cat_name: cat[0]['name']
+                                        books_of_same_cat.forEach(function(book_of_same_cat) {
+                                            data.push({
+                                              ...book_of_same_cat
+                                              cat_name: cat[0]['name']
+                                            });
                                         });
 
                                         res.json({
@@ -76,7 +75,21 @@ app.get('/api/similar_books',function(req,res){
                                           result:data
                                         })
                                     }
-                                    else res.json({status:0});
+                                    else {
+                                        data = [];
+
+                                        books_of_same_cat.forEach(function(book_of_same_cat) {
+                                            data.push({
+                                              ...book_of_same_cat
+                                              cat_name: 'غير مُعرف'
+                                            });
+                                        });
+
+                                        res.json({
+                                          status:1,
+                                          result:data
+                                        })
+                                    }
                                 });
                             }
                             else res.json({status:0});
