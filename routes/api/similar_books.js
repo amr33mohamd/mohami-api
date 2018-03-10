@@ -15,14 +15,14 @@ app.get('/api/similar_books',function(req,res){
                     {
                         data = [];
                         for(let counter in search_res) {
-                            con.query('select name FROM categories WHERE id=? LIMIT 1', [ search_res[0]['category_id'] ], function(err,cat) {
+                            con.query('select name FROM categories WHERE id=? LIMIT 1', [ search_res[counter]['category_id'] ], function(err,cat) {
                                 if(!err && cat.length)
                                 {
                                     data.push({
-                                      id: search_res[0]['id'],
-                                      book_name : search_res[0]['book_name'],
-                                      book_photo : search_res[0]['book_photo'],
-                                      author_name : search_res[0]['author_name'],
+                                      id: search_res[counter]['id'],
+                                      book_name : search_res[counter]['book_name'],
+                                      book_photo : search_res[counter]['book_photo'],
+                                      author_name : search_res[counter]['author_name'],
                                       cat_name: cat[0]['name']
                                     });
 
@@ -35,10 +35,10 @@ app.get('/api/similar_books',function(req,res){
                                 }
                                 else {
                                     data.push({
-                                      id: search_res[0]['id'],
-                                      book_name : search_res[0]['book_name'],
-                                      book_photo : search_res[0]['book_photo'],
-                                      author_name : search_res[0]['author_name'],
+                                      id: search_res[counter]['id'],
+                                      book_name : search_res[counter]['book_name'],
+                                      book_photo : search_res[counter]['book_photo'],
+                                      author_name : search_res[counter]['author_name'],
                                       cat_name: 'غير معرف'
                                     });
 
@@ -62,33 +62,41 @@ app.get('/api/similar_books',function(req,res){
                                     if(!err && cat.length)
                                     {
                                         data = [];
-
-                                        books_of_same_cat.forEach(function(book_of_same_cat) {
+                                        for(let counter in books_of_same_cat) {
                                             data.push({
-                                              ...book_of_same_cat,
+                                              id: books_of_same_cat[counter]['id'],
+                                              book_name : books_of_same_cat[counter]['book_name'],
+                                              book_photo : books_of_same_cat[counter]['book_photo'],
+                                              author_name : books_of_same_cat[counter]['author_name'],
                                               cat_name: cat[0]['name']
                                             });
-                                        });
 
-                                        res.json({
-                                          status:1,
-                                          result:data
-                                        })
+                                            if(counter == books_of_same_cat.length-1){
+                                              res.json({
+                                                status:1,
+                                                result:data
+                                              })
+                                            }
+                                        }
                                     }
                                     else {
                                         data = [];
-
-                                        books_of_same_cat.forEach(function(book_of_same_cat) {
+                                        for(let counter in books_of_same_cat) {
                                             data.push({
-                                              ...book_of_same_cat,
+                                              id: books_of_same_cat[counter]['id'],
+                                              book_name : books_of_same_cat[counter]['book_name'],
+                                              book_photo : books_of_same_cat[counter]['book_photo'],
+                                              author_name : books_of_same_cat[counter]['author_name'],
                                               cat_name: 'غير مُعرف'
                                             });
-                                        });
 
-                                        res.json({
-                                          status:1,
-                                          result:data
-                                        })
+                                            if(counter == books_of_same_cat.length-1){
+                                              res.json({
+                                                status:1,
+                                                result:data
+                                              })
+                                            }
+                                        }
                                     }
                                 });
                             }
