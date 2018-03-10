@@ -65,7 +65,7 @@ app.get('/api/similar_books',function(req,res){
 
                                         books_of_same_cat.forEach(function(book_of_same_cat) {
                                             data.push({
-                                              ...book_of_same_cat
+                                              ...book_of_same_cat,
                                               cat_name: cat[0]['name']
                                             });
                                         });
@@ -80,7 +80,7 @@ app.get('/api/similar_books',function(req,res){
 
                                         books_of_same_cat.forEach(function(book_of_same_cat) {
                                             data.push({
-                                              ...book_of_same_cat
+                                              ...book_of_same_cat,
                                               cat_name: 'غير مُعرف'
                                             });
                                         });
