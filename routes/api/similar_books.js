@@ -29,6 +29,7 @@ app.get('/api/similar_books',function(req,res){
                                     if(counter == search_res.length-1){
                                       res.json({
                                         status:1,
+                                        type: 0,
                                         result:data
                                       })
                                     }
@@ -45,6 +46,7 @@ app.get('/api/similar_books',function(req,res){
                                     if(counter == search_res.length-1){
                                       res.json({
                                         status:1,
+                                        type: 0,
                                         result:data
                                       })
                                     }
@@ -74,6 +76,7 @@ app.get('/api/similar_books',function(req,res){
                                             if(counter == books_of_same_cat.length-1){
                                               res.json({
                                                 status:1,
+                                                type: 1,
                                                 result:data
                                               })
                                             }
@@ -93,6 +96,7 @@ app.get('/api/similar_books',function(req,res){
                                             if(counter == books_of_same_cat.length-1){
                                               res.json({
                                                 status:1,
+                                                type: 1,
                                                 result:data
                                               })
                                             }
