@@ -7,7 +7,7 @@ app.get('/api/similar_books',function(req,res){
                 "%" + bookData[0].author_name + "%"
             ];
             con.query(`SELECT id, name AS book_name, image AS book_photo, author_name,
-                category_id FROM books WHERE ((name LIKE ?) OR (author_name LIKE ?) OR (descc LIKE ?) AND id != ?) LIMIT 5`,
+                category_id FROM books WHERE ((name LIKE ?) OR (author_name LIKE ?) OR (descc LIKE ?)) AND id != ? LIMIT 5`,
                 [correctQueries[0], correctQueries[1], correctQueries[0], book_id],
             function(err,search_res) {
                 if(!err) {
