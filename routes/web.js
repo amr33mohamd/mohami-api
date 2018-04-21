@@ -96,6 +96,7 @@ app.post('/add_ad', function(req, res) {
 	var image = req.files.image;
 	var title = req.body.title;
 	var random_num = Math.random();
+	var domain = 'http://' + req.get('host');
 
 	var image_link = 'images/' + random_num + '.jpg';
 	image.mv(image_link);
