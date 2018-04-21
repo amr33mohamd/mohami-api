@@ -65,6 +65,57 @@ app.get('/feedbacks', function(req, res) {
 	});
 });
 
+app.get('/ads', function(req, res) {
+	session.startSession(req, res, function() {
+		sql.select('ads', '1', '1', function(ads) {
+			res.render('ads', { ads });
+		});
+	});
+});
+
+app.get('/add-ad', function(req, res) {
+	session.startSession(req, res, function() {
+		sql.select('ads', '1', '1', function(data) {
+			res.render('add-ad', { data });
+		});
+	});
+});
+
+app.get('/delete-ad', function(req, res) {
+	var id = req.param('id');
+	sql.delete('ads', 'id', id, function(data) {
+		if (data) {
+			res.redirect('/ads');
+		} else {
+			res.send('please contact programmer if you got that error again');
+		}
+	});
+});
+
+app.post('/add_ad', function(req, res) {
+	var image = req.files.image;
+	var title = req.body.title;
+	var random_num = Math.random();
+
+	var image_link = 'images/' + random_num + '.jpg';
+	image.mv(image_link);
+
+	con.query(
+		'insert into ads(title,image) values(?,?)',
+		[
+			title,
+			(domain + image_link)
+		],
+		function(err, ress) {
+			if (err) {
+				res.send(err);
+			} else {
+				res.redirect('/add-ad');
+			}
+		}
+	);
+});
+
 app.get('/add-categories', function(req, res) {
 	session.startSession(req, res, function() {
 		sql.select('categories', '1', '1', function(categories) {
