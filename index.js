@@ -25,3 +25,4 @@ require('./routes/api/add_comment');
 require('./routes/api/feedback');
 require('./routes/api/similar_books');
 require('./routes/api/new_books');
+require('./routes/api/ads');
