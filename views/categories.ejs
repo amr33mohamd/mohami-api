@@ -27,20 +27,20 @@ var table = $('#datatable-buttons').DataTable();
      table.search('لا').draw();
    })
 
-$(".edit").click(function(){
- var id = $(this).attr('id');
- var new_name = prompt('تريد تغيره الى ماذا ؟');
- var what = $(this).attr('what');
- if(new_name != null){
-   $.get('/change-category',{
-       id,
-       new_name,
-       what
-     },function(data){
-       window.location = '/categories';
-     })
- }
-})
+   $('#datatable-buttons').on('click', '.edit', function () {
+       var id = $(this).attr('id');
+       var new_name = prompt('تريد تغيره الى ماذا ؟');
+       var what = $(this).attr('what');
+       if(new_name != null){
+         $.get('/change-category',{
+             id,
+             new_name,
+             what
+           },function(data){
+             window.location = '/categories';
+           })
+       }
+   });
 
    $(".pay").click(function(){
      var months = prompt('ما عدد الاشهر التى تريد اضافتها ؟');
