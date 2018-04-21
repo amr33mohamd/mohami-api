@@ -105,7 +105,7 @@ app.post('/add_ad', function(req, res) {
 		'insert into ads(title,image) values(?,?)',
 		[
 			title,
-			(domain + image_link)
+			(domain + '/' + image_link)
 		],
 		function(err, ress) {
 			if (err) {
