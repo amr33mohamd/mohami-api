@@ -134,7 +134,7 @@ $(".edit").click(function(){
 
                       <% ads.forEach(function(ad){ %>
                         <tr>
-                          <td><%= ad['title']  %> <i id="<%= ad['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="name"></i></td>
+                          <td><%= ad['title']  %></td>
 
                           <td><a style="color:red" href="/delete-ad?id=<%= ad['id'] %>" onclick="return confirm('هل تريد حذف هذا الاعلان حقا !');">X</a></td>
 
