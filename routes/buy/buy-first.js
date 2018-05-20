@@ -1,3 +1,13 @@
+const fetch = require('node-fetch');
+
+const converter = ({ from, to, amount }) => new Promise((resolve, reject) => {
+    fetch(`http://free.currencyconverterapi.com/api/v5/convert?q=${from}_${to}&compact=y`)
+    	.then(res => res.json())
+    	.then(json => resolve({
+            converted: amount * json[`${from}_${to}`]['val']
+        }));
+});
+
 app.get('/buy-first',function(req,res){
   var book_id = req.param('book_id');
   var user_id = req.param('user_id');
@@ -9,8 +19,7 @@ app.get('/buy-first',function(req,res){
           res.send('check your data');
         }
         else{
-          const converter = require('google-currency');
-          converter({
+         converter({
               from: "SAR",
               to: "USD",
               amount: (book[0]['fake_price'] > 0) ? book[0]['fake_price'] : book[0]['price']

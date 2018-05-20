@@ -1,3 +1,13 @@
+const fetch = require('node-fetch');
+
+const converter = ({ from, to, amount }) => new Promise((resolve, reject) => {
+    fetch(`http://free.currencyconverterapi.com/api/v5/convert?q=${from}_${to}&compact=y`)
+    	.then(res => res.json())
+    	.then(json => resolve({
+            converted: amount * json[`${from}_${to}`]['val']
+        }));
+});
+
 app.get('/api/price_of_book',function(req,res){
     var book_id = req.param("book_id");
     var convert = req.param("convert");
@@ -6,7 +16,6 @@ app.get('/api/price_of_book',function(req,res){
             var price = data[0]['price'], discount = data[0]['discount'];
             if(convert == 1)
             {
-                const converter = require('google-currency');
                 if(price > 0)
                 {
                     converter({
