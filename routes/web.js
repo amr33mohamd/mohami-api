@@ -899,58 +899,6 @@ app.get('/api/interestsscreen', function(req, res) {
 });
 
 //search screen -------------->
-app.get('/api/search', function(req, res) {
-	var name = req.param('name');
-	sql.lselect('users', 'name', name, function(data1) {
-		if (data1.length != 0) {
-			var single = [];
-			var result = [];
-
-			for (let i in data1) {
-				var today = new Date();
-
-				var dd = today.getDate();
-				var mm = today.getMonth(); //January is 0!
-				var yyyy = today.getFullYear();
-				var day = yyyy + '-' + mm + '-' + dd;
-				if (moment(data1[i].pay).isAfter(day)) {
-					var special = true;
-				} else {
-					var special = false;
-				}
-				if (single.length == 1) {
-					if (
-						single.push({
-							name: data1[i].name,
-							avatar_url: data1[i].image,
-							id: data1[i].id,
-							special: special
-						})
-					) {
-						if (result.push(single)) {
-							single = [];
-						}
-					}
-				} else {
-					single.push({
-						name: data1[i].name,
-						avatar_url: data1[i].image,
-						id: data1[i].id,
-						special: special
-					});
-					if (i == data1.length - 1) {
-						result.push(single);
-					}
-				}
-				if (i == data1.length - 1) {
-					res.send(result);
-				}
-			}
-		} else {
-			res.send([[{ name: false }]]);
-		}
-	});
-});
 
 app.get('/api/unlike', function(req, res) {
 	var someone_id = req.param('someone_id');
