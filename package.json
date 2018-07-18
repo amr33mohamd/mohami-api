@@ -16,13 +16,11 @@
     "express": "^4.15.4",
     "express-fileupload": "^0.3.0",
     "google-currency": "^1.0.7",
-    "index.js": "0.0.3",
-    "lodash": "^4.17.10",
     "moment": "^2.18.1",
     "mysql": "^2.14.1",
     "node-fetch": "^2.1.2",
     "node-session": "^1.2.1",
-    "nodemon": "^1.17.5"
+    "nodemon": "^1.12.1"
   },
   "devDependencies": {},
   "keywords": [

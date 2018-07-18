@@ -2,7 +2,10 @@
    express = require('express');
    app = express();
   var mysql = require('mysql');
-   port = process.env.PORT || 90;
+   port = process.env.PORT || 80;
+     addSubtractDate = require("add-subtract-date");
+    moment = require('moment');
+moment().format('L');
   app.set('view engine', 'ejs');
   app.use('/public', express.static('public'));
   app.use('/images', express.static('images'));
@@ -15,10 +18,10 @@ fs = require('fs');
 
 app.use(fileUpload());
   con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database:"mohami",
+  host: "178.62.17.251",
+  user: "amr",
+  password: "BeRichToGetABitch",
+  database:"mydb",
 
   });
 
