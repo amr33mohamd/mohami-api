@@ -1,9 +1,7 @@
 app.get('/terms-and-condition-and-policy', function(req, res) {
 	res.render('index');
 });
-app.get('/', function(req, res) {
-	res.render('index');
-});
+
 app.get('/dashboard', function(req, res) {
 	res.render('login');
 });
