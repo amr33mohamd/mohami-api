@@ -1,4 +1,4 @@
-app.get('/api/categories',function(req,res){
+app.get('/api/categories2',function(req,res){
   var places = [];
   var services = [];
   var types = [];
@@ -8,43 +8,53 @@ app.get('/api/categories',function(req,res){
   var new_services = [];
   var new_years = [];
   var new_types = [];
+  var _ = require('lodash');
+
     con.query('select * from places', function(err,places) {
       for(let i in places){
         tr(places[i].name,lang,(name)=>{
+          place = places[i].id;
           new_places.push({
-            value:places[i].id,
-            label:name
+            [place]:name
           })
           if(i == places.length-1){
             con.query('select * from services',function(err,services){
               for(let m in services){
                 tr(services[m].name,lang,(name)=>{
-                  new_services.push({
-                    value:services[m].id,
-                    label:name
-                  })
+                  service = services[m].id;
+                  if(new_services[0]){
+                      new_services.push({
+                        [service]:name
+                      })
+                    }
+                    else {
+                    new_services.push({
+                      [service]:name
+                    })
+                  }
+
                   if(m == services.length-1 ){
                     con.query('select * from years',function(err,years){
                       for(let n in years){
                         tr(years[n].name,lang,(name)=>{
+                          year = years[n].id
                           new_years.push({
-                            value:years[n].id,
-                            label:name
+                            [year]:name
                           })
                           if(n == years.length-1 ){
                             con.query('select * from types',function(err,types){
                               for(let o in types){
                                 tr(types[o].name,lang,(name)=>{
+                                  type = types[o].id
                                   new_types.push({
-                                    value:years[o].id,
-                                    label:name
+                                    [type]:name
                                   })
                                   if(o == types.length-1 ){
                                     res.json({
-                                      places:new_places,
-                                      years:new_years,
-                                      services:new_services,
-                                      types:new_types
+                                      places:_.assign.apply(_, new_places),
+                                      years: _.assign.apply(_, new_years),
+                                      services:_.assign.apply(_, new_services),
+                                      types:_.assign.apply(_, new_types)
                                     })
                                   }
                                 })

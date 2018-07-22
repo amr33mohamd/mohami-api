@@ -2,7 +2,7 @@
    express = require('express');
    app = express();
   var mysql = require('mysql');
-   port = process.env.PORT || 80;
+   port = process.env.PORT || 90;
      addSubtractDate = require("add-subtract-date");
     moment = require('moment');
 moment().format('L');
@@ -18,10 +18,10 @@ fs = require('fs');
 
 app.use(fileUpload());
   con = mysql.createConnection({
-  host: "178.62.17.251",
-  user: "amr",
-  password: "BeRichToGetABitch",
-  database:"mydb",
+  host: "178.128.186.80",
+  user: "root",
+  password: "a33304454",
+  database:"mohami",
 
   });
 

@@ -140,13 +140,7 @@ app.post('/add_category', function(req, res) {
 	});
 });
 
-app.get('/categories', function(req, res) {
-	session.startSession(req, res, function() {
-		sql.select('categories', '1', '1', function(categories) {
-			res.render('categories', { categories });
-		});
-	});
-});
+
 
 app.get('/delete-category', function(req, res) {
 	var cat_id = req.param('id');
@@ -899,84 +893,6 @@ app.get('/api/interestsscreen', function(req, res) {
 });
 
 //search screen -------------->
-app.get('/api/search', function(req, res) {
-	var name = req.param('name');
-	sql.lselect('users', 'name', name, function(data1) {
-		if (data1.length != 0) {
-			var single = [];
-			var result = [];
-
-			for (let i in data1) {
-				var today = new Date();
-
-				var dd = today.getDate();
-				var mm = today.getMonth(); //January is 0!
-				var yyyy = today.getFullYear();
-				var day = yyyy + '-' + mm + '-' + dd;
-				if (moment(data1[i].pay).isAfter(day)) {
-					var special = true;
-				} else {
-					var special = false;
-				}
-				if (single.length == 1) {
-					if (
-						single.push({
-							name: data1[i].name,
-							avatar_url: data1[i].image,
-							id: data1[i].id,
-							special: special
-						})
-					) {
-						if (result.push(single)) {
-							single = [];
-						}
-					}
-				} else {
-					single.push({
-						name: data1[i].name,
-						avatar_url: data1[i].image,
-						id: data1[i].id,
-						special: special
-					});
-					if (i == data1.length - 1) {
-						result.push(single);
-					}
-				}
-				if (i == data1.length - 1) {
-					res.send(result);
-				}
-			}
-		} else {
-			res.send([[{ name: false }]]);
-		}
-	});
-});
-
-app.get('/api/unlike', function(req, res) {
-	var someone_id = req.param('someone_id');
-	var liked_id = req.param('liked_id');
-	sql.ddelete('likes', 'someone_id', someone_id, 'liked_id', liked_id, function(
-		data
-	) {
-		res.send({ status: data });
-	});
-});
-
-app.get('/api/like', function(req, res) {
-	var someone_id = req.param('someone_id');
-	var liked_id = req.param('liked_id');
-	con.query(
-		'insert into likes(someone_id,liked_id) values(?,?)',
-		[someone_id, liked_id],
-		function(err, ress) {
-			if (err) {
-				res.send({ status: false });
-			} else {
-				res.send({ status: true });
-			}
-		}
-	);
-});
 
 app.get('/api/user', function(req, res) {
 	var user_id = req.param('user_id');
