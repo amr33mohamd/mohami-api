@@ -2,7 +2,7 @@
    express = require('express');
    app = express();
   var mysql = require('mysql');
-   port = process.env.PORT || 80;
+   port = process.env.PORT || 70;
      addSubtractDate = require("add-subtract-date");
     moment = require('moment');
 moment().format('L');
