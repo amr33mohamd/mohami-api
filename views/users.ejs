@@ -32,12 +32,13 @@ var table = $('#datatable-buttons').DataTable();
         var new_name = prompt('تريد تغيره الى ماذا ؟');
         var what = $(this).attr('what');
         if(new_name != null){
-          $.get('/change',{
+          $.get('/edit-user',{
               id,
-              new_name,
+              value:new_name,
               what
             },function(data){
-              window.location = '/users';
+              // console.log(data);
+              window.location = '/lawyers';
             })
         }
     });
@@ -64,6 +65,18 @@ var table = $('#datatable-buttons').DataTable();
       })
     })
 
+    $(".select").change(function (){
+        var value = $(this).find("option:checked").val();
+        var id = $(this).attr('id');
+        var what = $(this).attr('what');
+        $.get('/edit-user',{
+            id,
+            value,
+            what
+          },function(data){
+            window.location = '/lawyers';
+          })
+    });
 
 
       $("#pay2").click(function(){
@@ -102,14 +115,14 @@ var table = $('#datatable-buttons').DataTable();
 
                <div class="x_panel">
                  <div class="x_title text-center">
-                   <h2>ابن الجوزي | <small>المستخدمين</small></h2>
+                   <h2>محامي | <small>المستخدمين</small></h2>
                    <ul class="nav navbar-right panel_toolbox">
                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                      </li>
                      <li class="dropdown">
                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                        <ul class="dropdown-menu" role="menu">
-                         <li><a href="#">Settings 1</a>
+                         <li><a href="#"><%= services2[0].value %></a>
                          </li>
                          <li><a href="#">Settings 2</a>
                          </li>
@@ -129,13 +142,21 @@ var table = $('#datatable-buttons').DataTable();
                        <tr>
                          <th>الاسم</th>
                          <th>البريد الالكترونى </th>
-                         <th>كلمه السر</th>
-                         <th>التحميلات</th>
-
-                         <th>الدور</th>
-
-                         <th>اجعله مدير</th>
-
+                         <th>الجنس</th>
+                         <th>النوع</th>
+                         <th>عدد سنوات الخبره</th>
+                         <th>الخدمه القانونيه</th>
+                         <th>الحاله</th>
+                         <th>رقم الهاتف</th>
+                         <th>رقم الجوال</th>
+                         <th>النبذه الشخصيه</th>
+                         <th>حساب فيسبوك</th>
+                         <th>حساب تويتر</th>
+                         <th>حساب انستجرام</th>
+                         <th>حساب تويتر</th>
+                         <th>موقع الويب</th>
+                         <th>الصوره</th>
+                         <th>تعديل الصوره</th>
                          <th>حذف</th>
 
                        </tr>
@@ -143,22 +164,97 @@ var table = $('#datatable-buttons').DataTable();
 
 
                      <tbody>
-
+                       <script>
+                       $(document).ready(function(){
+                         $("select").change(function (){
+                             var value = $(this).find("option:checked").val();
+                             var id = $(this).attr('id');
+                             var what = $(this).attr('what');
+                             $.get('/edit-user',{
+                                 id,
+                                 value,
+                                 what
+                               },function(data){
+                                 window.location = '/lawyers';
+                                 console.log(data)
+                               })
+                         });
+                       })
+                       </script>
                        <% data.forEach(function(user){ %>
+
                          <tr>
                            <td><%= user['name']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="name"></i></td>
                            <td><%= user['email']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="email"></i></td>
-                           <td><%= user['password']  %> <i id="<%= user['id']  %>"  what="password" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
-                           <td><%= user['downloads']  %> <i id="<%= user['id']  %>"  what="downloads" class="fa edit fa-pencil-square-o" aria-hidden="true"></i></td>
+                           <td> <select class="form-control col-lg-12" id="<%= user['id'] %>" what="sex" class="select">
+                                        <% if(user['sex'] == 1) {%>
+                                    <option value="1" selected>انثي</option>
+                                     <option value="2">ذكر</option>
+                                        <% } else {%>
+                                    <option value="2" selected>ذكر</option>
+                                    <option value="1" >انثي</option>
 
-                           <td><% if(user['rule'] == 1){
-                            %>
-                            مدير
-                           <% }else{ %>
-                            مستخدم عادي
-                           <% } %></td>
+                                     <% } %>
+                            </select>
+                          </td>
+                           <td>
+                             <select class="form-control col-lg-12" id="<%= user['id'] %>" what = "type" class="select">
+                               <%  types2.forEach(function(type) {
+                                         if(type['id'] == user['type']) {%>
+                                     <option value="<%= type['id'] %>" selected><%= type['value'] %></option>
+                                         <% } else {%>
+                                     <option value="<%= type['id'] %>"><%= type['value'] %></option>
+                               <% }}) %>
+                             </select>
+                           </td>
+                           <td>
 
-                           <td><button class="btn btn-success" id="admin" user="<%= user['id'] %>">اجعله مدير</button></td>
+                             <select class="form-control col-lg-12" id="<%= user['id'] %>" what="years" class="select">
+
+                               <%  years2.forEach(function(year) {
+                                         if(year['id'] == user['years']) {%>
+                                     <option value="<%= year['id'] %>" selected><%= year['value'] %></option>
+                                         <% } else {%>
+                                     <option value="<%= year['id'] %>"><%= year['value'] %></option>
+                               <% }}) %>
+                             </select>
+                           </td>
+                           <td>
+                             <select class="form-control col-lg-12" id="<%= user['id'] %>" what="service" class="select">
+                               <%  services2.forEach(function(service) {
+                                         if(service['id'] == user['service']) {%>
+                                     <option value="<%= service['id'] %>" selected><%= service['value'] %></option>
+                                         <% } else {%>
+                                     <option value="<%= service['id'] %>"><%= service['value'] %></option>
+                               <% }}) %>
+                             </select>
+                           </td>
+                           <td>
+                             <select class="form-control col-lg-12" id="<%= user['id'] %>" what="status" class="select">
+                                         <% if(user['status'] == 1) {%>
+                                      <option value="1" selected>نشط</option>
+                                      <option value="2">قيد القبول</option>
+                                         <% } else {%>
+                                     <option value="2" selected>قيد القبول</option>
+                                     <option value="1" >نشط</option>
+
+                                      <% } %>
+                             </select>
+                           </td>
+                           <td><%= user['line']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="line"></i></td>
+                           <td><%= user['phone']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="phone"></i></td>
+                           <td><%= user['bio']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="bio"></i></td>
+                           <td><%= user['facebook']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="facebook"></i></td>
+                           <td><%= user['insta']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="insta"></i></td>
+                           <td><%= user['twitter']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="twitter"></i></td>
+                           <td><%= user['web']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="web"></i></td>
+                           <td><%= user['email']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="email"></i></td>
+                           <td><img width="100" height="100" src="<%= user['image']  %>"/></td>
+                           <td><form action="lawyer-image" method="post" enctype="multipart/form-data">
+                             <input type="file" name="image" />
+                             <input type="hidden" value="<%= user['id']  %>" name="id"/>
+                             <input type="submit" value="edit"/>
+                           </form></td>
 
 
 
@@ -183,70 +279,6 @@ var table = $('#datatable-buttons').DataTable();
 
 
 </div>
-<div class="col-md-10 col-sm-9 col-xs-9">
-                            <div class="x_panel">
-                              <div class="x_title">
-                                <h2>اضف | <small>مستخدم</small></h2>
-                                <ul class="nav navbar-right panel_toolbox">
-
-                                  <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                  </li>
-                                </ul>
-                                <div class="clearfix"></div>
-                              </div>
-                              <div class="x_content">
-
-
-                                <form method="get" action="/add_user" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">الاسم <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="name" name="name" required="required" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-
-
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">البريد الالكترونى <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="name" name="email" required="required" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-
-
-
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">كلمه السر <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="name" name="password" required="required" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-
-
-
-
-                      <div class="ln_solid"></div>
-                      <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-
-                          <button type="submit" class="btn center-block btn-success">اضف</button>
-                        </div>
-                      </div>
-
-                    </form>
-
-                              </div>
-                            </div>
-                          </div>
-
-
-
-
-                   </div>
 
 
 

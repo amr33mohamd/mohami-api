@@ -9,59 +9,89 @@ app.get('/login', function(req, response) {
 	var email = req.param('email');
 	var password = req.param('password');
 
-	var crypto = require('crypto');
-	var hash = crypto
-		.createHash('md5')
-		.update(password)
-		.digest('hex');
 
-	var sql = 'select * from users where name = ? and password = ? and rule = ?';
-	con.query(sql, [email, hash, 1], function(err, res) {
-		if (res.length == 0) {
-			response.redirect('/dashboard');
-		} else {
+
+	// var sql = 'select * from users where name = ? and password = ? and rule = ?';
+	// con.query(sql, [email, hash, 1], function(err, res) {
+		if (email = 'admin' && password== 'jkhj@3#$%h^6fc') {
 			session.startSession(req, response, function() {
 				//fake session ------->
-				req.session.put('hospital_id', res[0].hospital_id);
-				req.session.put('rule', res[0].rule);
-				response.redirect('/users');
+				req.session.put('rule', '1');
+				response.redirect('/services');
 			});
+		} else {
+			response.redirect('/dashboard');
 		}
-	});
+	// });
 });
 
 //full admin control -------------->
-app.get('/users', function(req, res) {
+app.get('/lawyers', function(req, res) {
 	session.startSession(req, res, function() {
-		sql.select('users', '1', '1', function(data) {
-			var today = new Date();
-			var users = [];
-			var dd = today.getDate();
-			var mm = today.getMonth(); //January is 0!
-			var yyyy = today.getFullYear();
-			var day = yyyy + '-' + mm + '-' + dd;
-			sql.select('users', '1', '1', function(data1) {
-				for (let i in data1) {
-					//if the user still has paid time ----->
-					if (moment(data1[i].pay).isAfter(day)) {
-						users.push(data1[i]);
-					} else {
-					}
-				}
+		var rule = req.session.get('rule');
+		var services2 = [];
+		var types2 = [];
+		var years2 = [];
+			if(rule == 1 ){
+				sql.select('lawyers', '1', '1', function(lawyers) {
+					sql.select('services', '1', '1', function(services) {
+						for(let i in services){
+			        tr(services[i].name,'ar',(name)=>{
+			          services2.push({
+			            id:services[i].id,
+			            value:name
+			          })
+							});
+						}
+						sql.select('types', '1', '1', function(types) {
+							for(let i in types){
+				        tr(types[i].name,'ar',(name)=>{
+				          types2.push({
+				            id:types[i].id,
+				            value:name
+				          })
+								});
+							}
+							sql.select('years', '1', '1', function(years) {
+								var years3 = []
+								for(let m in years){
+					        tr(years[m].name,'ar',(name)=>{
+					          years3.push({
+					            id:years[m].id,
+					            value:name
+					          })
+										if(m == years.length-1){
+											res.render('users', { data: lawyers, services2,types2,years2:years3 });
 
-				res.render('users', { data: data, users });
-			});
+										}
+									});
+								}
+							});
+						});
+					});
+				});
+			}
+			else {
+				res.redirect('/dashboard');
+			}
+	});
+});
+
+app.get('/requests', function(req, res) {
+	session.startSession(req, res, function() {
+		sql.select('requests', '1', '1', function(users) {
+			res.render('requests', { data: users });
+		});
+	});
+});
+app.get('/calls', function(req, res) {
+	session.startSession(req, res, function() {
+		sql.select('calls', '1', '1', function(users) {
+			res.render('calls', { data: users });
 		});
 	});
 });
 
-app.get('/feedbacks', function(req, res) {
-	session.startSession(req, res, function() {
-		sql.select('feedbacks', '1', '1', function(users) {
-			res.render('feedback', { data: users });
-		});
-	});
-});
 
 app.get('/ads', function(req, res) {
 	session.startSession(req, res, function() {
@@ -78,7 +108,24 @@ app.get('/add-ad', function(req, res) {
 		});
 	});
 });
+app.post('/lawyer-image',function(req,res){
+	var id = req.body.id;
+	var image = req.files.image;
+	var random_num = Math.random();
+	var domain = 'http://' + req.get('host');
 
+	var image_link = 'public/images/' + random_num + '.jpg';
+	image.mv(image_link);
+	sql.update('lawyers','image',domain + '/' + image_link,'id',id,function(data){
+		if(data){
+			res.redirect('/lawyers')
+		}
+		else {
+			res.json({data})
+		}
+	})
+
+})
 app.get('/delete-ad', function(req, res) {
 	var id = req.param('id');
 	sql.delete('ads', 'id', id, function(data) {
@@ -168,16 +215,162 @@ app.get('/change-category', function(req, res) {
 	});
 });
 
-app.get('/subcategories', function(req, res) {
+app.get('/services', function(req, res) {
 	session.startSession(req, res, function() {
-		sql.select('sub_categories', '1', '1', function(sub_categories) {
-			sql.select('categories', '1', '1', function(categories) {
-				res.render('subcategories', { categories, sub_categories });
+		var services2 = [];
+		sql.select('services', '1', '1', function(services) {
+			for(let i in services){
+				tr(services[i].name,'ar',(ar)=>{
+					tr(services[i].name,'en',(en)=>{
+					services2.push({
+						id:services[i].name,
+						ar,
+						en,
+					})
+					if(i == services.length-1){
+						res.render('services', { services:services2 });
+					}
+					});
+				});
+			}
 			});
 		});
 	});
-});
+	app.get('/types', function(req, res) {
+		session.startSession(req, res, function() {
+			var services2 = [];
+			sql.select('types', '1', '1', function(services) {
+				for(let i in services){
+					tr(services[i].name,'ar',(ar)=>{
+						tr(services[i].name,'en',(en)=>{
+						services2.push({
+							id:services[i].name,
+							ar,
+							en,
+						})
+						if(i == services.length-1){
+							res.render('types', { services:services2 });
+						}
+						});
+					});
+				}
+				});
+			});
+		});
+		app.get('/years', function(req, res) {
+			session.startSession(req, res, function() {
+				var services2 = [];
+				sql.select('years', '1', '1', function(services) {
+					for(let i in services){
+						tr(services[i].name,'ar',(ar)=>{
+							tr(services[i].name,'en',(en)=>{
+							services2.push({
+								id:services[i].name,
+								ar,
+								en,
+							})
+							if(i == services.length-1){
+								res.render('years', { services:services2 });
+							}
+							});
+						});
+					}
+					});
+				});
+			});
+			app.get('/places', function(req, res) {
+				session.startSession(req, res, function() {
+					var services2 = [];
+					sql.select('places', '1', '1', function(services) {
+						for(let i in services){
+							tr(services[i].name,'ar',(ar)=>{
+								tr(services[i].name,'en',(en)=>{
+								services2.push({
+									id:services[i].name,
+									ar,
+									en,
+								})
+								if(i == services.length-1){
+									res.render('places', { services:services2 });
+								}
+								});
+							});
+						}
+						});
+					});
+				});
+				app.get('/legalinfo', function(req, res) {
+					session.startSession(req, res, function() {
+						var services2 = [];
+						sql.select('legalinfo', '1', '1', function(services) {
+							for(let i in services){
+								tr(services[i].title,'ar',(titlear)=>{
+									tr(services[i].title,'en',(titleen)=>{
+										tr(services[i].text,'ar',(textar)=>{
+											tr(services[i].text,'en',(texten)=>{
+													services2.push({
+														id:services[i].id,
+														title:services[i].title,
+														text:services[i].text,
+														titlear,
+														titleen,
+														textar,
+														texten
+													})
+													if(i == services.length-1){
+														res.render('legalinfo', { services:services2 });
+													}
+											});
+										});
+									});
+								});
+							}
+							});
+						});
+					});
+app.get('/add_translate',function(req,res){
+	var table = req.param('table');
+	var ar = req.param('ar');
+	var en = req.param('en');
+	con.query('insert into translation_key(name) values(?)',[table+'_name'],function(err,data1){
+		con.query('insert into translation_value(value,lang,translation_key_id) values(?,?,?);insert into translation_value(value,lang,translation_key_id) values(?,?,?)',[ar,1,data1.insertId,en,2,data1.insertId],function(err2,data2){
+				con.query('insert into '+table+'(name) values(?)',[data1.insertId],function(err,data4){
+					if(!err){
+						res.redirect('/'+table)
+					}
+					else {
+						res.send(err)
+					}
+			})
+		})
+	})
+})
 
+app.get('/add_translate2',function(req,res){
+	var table = req.param('table');
+	var textar = req.param('textar');
+	var texten = req.param('texten');
+	var titlear = req.param('titlear');
+	var titleen = req.param('titleen');
+
+	con.query('insert into translation_key(name) values(?)',[table+'_title'],function(err,data1){
+		con.query('insert into translation_value(value,lang,translation_key_id) values(?,?,?);insert into translation_value(value,lang,translation_key_id) values(?,?,?)',[titlear,1,data1.insertId,titleen,2,data1.insertId],function(err2,data2){
+			con.query('insert into translation_key(name) values(?)',[table+'_text'],function(err,data3){
+				con.query('insert into translation_value(value,lang,translation_key_id) values(?,?,?);insert into translation_value(value,lang,translation_key_id) values(?,?,?)',[textar,1,data3.insertId,texten,2,data3.insertId],function(err2,data4){
+
+				con.query('insert into '+table+'(title,text) values(?,?)',[data1.insertId,data3.insertId],function(err,data5){
+					if(!err){
+						res.redirect('/'+table)
+					}
+					else {
+						res.send(err)
+					}
+			})
+		});
+	});
+		})
+	})
+})
 app.get('/add-subcategories', function(req, res) {
 	session.startSession(req, res, function() {
 		sql.select('categories', '1', '1', function(categories) {
@@ -580,7 +773,7 @@ app.post('/change-image', function(req, res) {
 
 app.get('/delete-user', function(req, res) {
 	var user_id = req.param('id');
-	sql.delete('users', 'id', user_id, function(data) {
+	sql.delete('lawyers', 'id', user_id, function(data) {
 		if (data) {
 			res.redirect('/users');
 		} else {
@@ -645,21 +838,21 @@ app.get('/pay-per-month', function(req, res) {
 	});
 });
 
-app.get('/change', function(req, res) {
+app.get('/edit-translate', function(req, res) {
 	var id = req.param('id');
 	var what = req.param('what');
 	var new_name = req.param('new_name');
-	sql.update('users', what, new_name, 'id', id, function(data) {
+	sql.dupdate('translation_value', 'value', new_name, 'translation_key_id', id,'lang',what, function(data) {
 		res.send(data);
 	});
 });
 
-app.get('/change-book', function(req, res) {
+app.get('/edit-user', function(req, res) {
 	var id = req.param('id');
 	var what = req.param('what');
-	var new_name = req.param('new_name');
-	sql.update('books', what, new_name, 'id', id, function(data) {
-		res.send(data);
+	var value = req.param('value');
+	sql.update('lawyers', what, value, 'id', id, function(data,err) {
+		res.json({data,err});
 	});
 });
 

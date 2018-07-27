@@ -102,7 +102,7 @@ $(".edit").click(function(){
 
               <div class="x_panel">
                 <div class="x_title text-center">
-                  <h2>ابن الجوزي | <small>الرسائل</small></h2>
+                  <h2>محامي | <small>الرسائل</small></h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -128,6 +128,7 @@ $(".edit").click(function(){
                     <thead>
                       <tr>
                         <th>الاسم</th>
+                        <th>رقم الهاتف</th>
                         <th>البريد الالكترونى </th>
                         <th>الرساله</th>
 
@@ -141,9 +142,10 @@ $(".edit").click(function(){
                       <% data.forEach(function(user){ %>
                         <tr>
                           <td><%= user['name']  %> </td>
+                          <td><%= user['phone']  %> </td>
                           <td><%= user['email']  %> </td>
                           <td><%= user['message']  %> </td>
-                           </tr>
+                        </tr>
                      <% }); %>
 
                     </tbody>

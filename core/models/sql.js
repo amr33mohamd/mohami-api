@@ -1,5 +1,5 @@
 exports.select = function(table,what,that,callback){
-  
+
     var sql = "SELECT * FROM `"+table+"` WHERE "+what+" = ? order by id desc";
     con.query(sql,[that],function(res,err){
     	if(err){
@@ -8,10 +8,10 @@ exports.select = function(table,what,that,callback){
     	else{
     		callback(res);
     	}
-    });  
+    });
 };
 exports.lselect = function(table,what,that,callback){
-  
+
     var sql = "SELECT * FROM `"+table+"` WHERE "+what+" LIKE  ? order by id desc";
     con.query(sql,['%'+that+'%'],function(res,err){
         if(err){
@@ -20,10 +20,10 @@ exports.lselect = function(table,what,that,callback){
         else{
             callback(res);
         }
-    });  
+    });
 };
 exports.selectAll = function(table,callback){
-  
+
     var sql = "SELECT * FROM `"+table+"";
     con.query(sql,function(res,err){
     	if(err){
@@ -32,10 +32,10 @@ exports.selectAll = function(table,callback){
     	else{
     		callback(res);
     	}
-    });  
+    });
 };
 exports.dselect = function(table,what,that,what1,that1,callback){
-  
+
     var sql = "SELECT * FROM `"+table+"` WHERE "+what+" = ? and "+what1+" = ? order by id desc";
     con.query(sql,[that,that1],function(res,err){
     	if(err){
@@ -44,7 +44,7 @@ exports.dselect = function(table,what,that,what1,that1,callback){
     	else{
     		callback(res);
     	}
-    });  
+    });
 };
 exports.update = function(table,what,that,him,thiss,callback){
     var sql = "update "+table+" set "+what+"= ? where "+him+"= ?";
@@ -54,6 +54,17 @@ exports.update = function(table,what,that,him,thiss,callback){
         }
         else{
             callback(true);
+        }
+     });
+}
+exports.dupdate = function(table,what,that,him,thiss,him2,thiss2,callback){
+    var sql = "update "+table+" set "+what+"= ? where "+him+"= ? and "+him2+" = ?";
+     con.query(sql,[that,thiss,thiss2],function(err,res){
+        if(err){
+            callback(err)
+        }
+        else{
+            callback(res);
         }
      });
 }

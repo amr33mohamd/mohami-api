@@ -2,7 +2,7 @@
    express = require('express');
    app = express();
   var mysql = require('mysql');
-   port = process.env.PORT || 80;
+   port = process.env.PORT || 90;
      addSubtractDate = require("add-subtract-date");
     moment = require('moment');
 moment().format('L');
@@ -22,7 +22,7 @@ app.use(fileUpload());
   user: "root",
   password: "a33304454",
   database:"mohami",
-
+  multipleStatements: true
   });
 
   /*
