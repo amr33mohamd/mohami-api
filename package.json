@@ -13,6 +13,7 @@
     "body-parser": "^1.18.2",
     "compress.js": "^1.1.2",
     "ejs": "^2.5.7",
+    "expo-server-sdk": "^3.0.0",
     "express": "^4.15.4",
     "express-fileupload": "^0.3.0",
     "google-currency": "^1.0.7",
