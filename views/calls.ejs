@@ -131,8 +131,8 @@ $(".edit").click(function(){
                         <th>رقم الهاتف</th>
                         <th>البريد الالكترونى </th>
                         <th>الرساله</th>
-
-
+                        <th>الاسم</th>
+                        <th>الرد</th>
                       </tr>
                     </thead>
 
@@ -145,6 +145,9 @@ $(".edit").click(function(){
                           <td><%= user['phone']  %> </td>
                           <td><%= user['email']  %> </td>
                           <td><%= user['message']  %> </td>
+                          <td><% if(user['user_name'] == null){ %> مستخدم <% } else { %> محامي :  <%= user['user_name'] %> <% } %> </td>
+                          <td><a href="mailto:<%= user['email']  %>" />الرد</a></td>
+
                         </tr>
                      <% }); %>
 
