@@ -191,6 +191,22 @@ app.get('/api/add-token',function(req,res){
 app.get('/notify',function(req,res){
 	res.render('notify');
 })
+app.get('/terms',function(req,res){
+	res.render('terms');
+})
+
+
+app.get('/terms-edit',function(req,res){
+	var new_ar_name = req.param('new_ar_name');
+	var new_en_name = req.param('new_en_name');
+
+	sql.dupdate('translation_value', 'value', new_ar_name, 'translation_key_id', '11','lang','1', function(data) {
+		sql.dupdate('translation_value', 'value', new_en_name, 'translation_key_id', '11','lang','2', function(data) {
+		res.redirect('/terms');
+		});
+	});
+})
+
 app.get('/send_notify',function(req,res){
 var	message = req.param('message');
 	sql.select('tokens','1','1',function(data){

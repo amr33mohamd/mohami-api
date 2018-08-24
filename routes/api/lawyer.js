@@ -27,7 +27,7 @@ app.get('/api/add_lawyer',function(req,res){
   var service = req.param('service');
 
 
-    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ',[name,
+    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0) ',[name,
   place,
   type,
   years,
@@ -45,10 +45,10 @@ app.get('/api/add_lawyer',function(req,res){
   fax,
 service], function(err,data) {
       if(!err){
-        res.json({response:true})
+        res.json({response:data.insertId});
       }
       else {
-        res.json({response:false})
+        res.json({response:err})
       }
     })
 });

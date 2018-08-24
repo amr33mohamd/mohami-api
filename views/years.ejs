@@ -149,7 +149,7 @@ $(".select_parent_category").change(function (){
 
                       <% services.forEach(function(service){ %>
                         <tr>
-                          <td><%= service['ar']  %> <i id="<%= service['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="1"></i></td>
+                          <td style="text-align:right"><i id="<%= service['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="1"></i><%= service['ar']  %> </td>
                           <td><%= service['en']  %> <i id="<%= service['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="2"></i></td>
                           <td><a style="color:red" href="/custom-delete?id=<%= service['id'] %>&table=years" onclick="return confirm('هل تريد حذف هذا القسم حقا !');">X</a></td>
                            </tr>
