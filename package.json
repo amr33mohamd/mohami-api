@@ -21,7 +21,9 @@
     "mysql": "^2.14.1",
     "node-fetch": "^2.1.2",
     "node-session": "^1.2.1",
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "soap": "^0.25.0",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {},
   "keywords": [

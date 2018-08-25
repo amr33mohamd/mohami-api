@@ -485,7 +485,7 @@ app.get('/delete-subcategory', function(req, res) {
 	});
 });
 
-app.get('/test', function(req, res) {
+app.get('/ttest', function(req, res) {
 	var mysqll = require('mysql');
 
 	var conn = mysqll.createConnection({

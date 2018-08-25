@@ -25,9 +25,9 @@ app.get('/api/add_lawyer',function(req,res){
   var email = req.param('email');
   var fax = req.param('fax');
   var service = req.param('service');
+  var code = Math.floor(Math.random()*(89998)+10000); // from 10,000 to 99,999
 
-
-    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0) ',[name,
+    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?) ',[name,
   place,
   type,
   years,
@@ -43,8 +43,12 @@ app.get('/api/add_lawyer',function(req,res){
   web,
   email,
   fax,
-service], function(err,data) {
+service,
+code], function(err,data) {
       if(!err){
+        api.sendSms('your verification code is '+code,phone, function(data){
+          console.log(data);
+        })
         res.json({response:data.insertId});
       }
       else {
