@@ -6,6 +6,7 @@ app.get('/api/single_lawyer',function(req,res){
       res.json({ lawyer:lawyer[0]})
     })
 });
+api = require('../api.js')
 app.get('/api/add_lawyer',function(req,res){
 
   var name = req.param('name');
