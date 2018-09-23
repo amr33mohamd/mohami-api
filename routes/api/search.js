@@ -12,7 +12,15 @@ app.get('/api/search',function(req,res){
   }
   else {
     con.query('select id,image from lawyers where place = ? and type = ? and years = ? and sex = ? and status = 1',[place,type,years,sex], function(err,lawyers) {
-      res.json({ lawyers})
+      if(lawyers.length == 0){
+        con.query('select id,image from lawyers where  status = 1', function(err,lawyers2) {
+          res.json({ lawyers:lawyers2})
+
+        });
+      }
+      else {
+        res.json({ lawyers})
+      }
     })
   }
 });
