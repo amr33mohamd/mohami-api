@@ -836,7 +836,7 @@ app.get('/delete-user', function(req, res) {
 	var user_id = req.param('id');
 	sql.delete('lawyers', 'id', user_id, function(data) {
 		if (data) {
-			res.redirect('/users');
+			res.redirect('/lawyers');
 		} else {
 			res.send('please contact programmer if you got that error again');
 		}

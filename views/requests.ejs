@@ -132,6 +132,7 @@ $(".edit").click(function(){
                         <th>البريد الالكترونى </th>
                         <th>الرساله</th>
 
+                        <th>الرد</th>
 
                       </tr>
                     </thead>
@@ -145,6 +146,8 @@ $(".edit").click(function(){
                           <td><%= user['phone']  %> </td>
                           <td><%= user['email']  %> </td>
                           <td><%= user['message']  %> </td>
+                          <td><a href="mailto:<%= user['email']  %>" />الرد</a></td>
+
                         </tr>
                      <% }); %>
 
