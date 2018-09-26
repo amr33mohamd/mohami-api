@@ -898,7 +898,9 @@ app.get('/pay-per-month', function(req, res) {
 		}
 	});
 });
-
+app.get('/privacy_policy',function(req,res){
+	res.render('privacy_policy');
+})
 app.get('/edit-translate', function(req, res) {
 	var id = req.param('id');
 	var what = req.param('what');
