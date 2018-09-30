@@ -36,7 +36,7 @@ app.get('/api/categories',function(req,res){
                               for(let o in types){
                                 tr(types[o].name,lang,(name)=>{
                                   new_types.push({
-                                    value:years[o].id,
+                                    value:types[o].id,
                                     label:name
                                   })
                                   if(o == types.length-1 ){
