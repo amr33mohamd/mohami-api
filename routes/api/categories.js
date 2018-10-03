@@ -5,6 +5,8 @@ app.get('/api/categories',function(req,res){
   var years = [];
   var lang = req.param('lang');
   var new_places= [];
+  var new_smallplaces= [];
+
   var new_services = [];
   var new_years = [];
   var new_types = [];
@@ -40,11 +42,24 @@ app.get('/api/categories',function(req,res){
                                     label:name
                                   })
                                   if(o == types.length-1 ){
-                                    res.json({
-                                      places:new_places,
-                                      years:new_years,
-                                      services:new_services,
-                                      types:new_types
+                                    con.query('select * from smallplaces',function(err,smallplaces){
+                                      for(let l in smallplaces){
+                                        tr(smallplaces[l].name,lang,(name)=>{
+                                          new_smallplaces.push({
+                                            value:smallplaces[l].id,
+                                            label:name
+                                          })
+                                          if(l == smallplaces.length-1 ){
+                                            res.json({
+                                              places:new_places,
+                                              years:new_years,
+                                              services:new_services,
+                                              types:new_types,
+                                              smallplaces:new_smallplaces
+                                            })
+                                          }
+                                        })
+                                      }
                                     })
                                   }
                                 })

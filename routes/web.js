@@ -339,6 +339,7 @@ app.get('/services', function(req, res) {
 					});
 				});
 			});
+
 			app.get('/places', function(req, res) {
 				session.startSession(req, res, function() {
 					var services2 = [];
@@ -360,6 +361,33 @@ app.get('/services', function(req, res) {
 						});
 					});
 				});
+				app.get('/smallplaces', function(req, res) {
+					session.startSession(req, res, function() {
+						var services2 = [];
+						sql.select('smallplaces', '1', '1', function(services) {
+							if(services.length > 0 ){
+							for(let i in services){
+								tr(services[i].name,'ar',(ar)=>{
+									tr(services[i].name,'en',(en)=>{
+									services2.push({
+										id:services[i].name,
+										ar,
+										en,
+									})
+									if(i == services.length-1){
+										res.render('smallplaces', { services:services2 });
+									}
+									});
+								});
+							}
+						}
+						else {
+							res.render('smallplaces', { services:services });
+
+						}
+							});
+						});
+					});
 				app.get('/legalinfo', function(req, res) {
 					session.startSession(req, res, function() {
 						var services2 = [];
