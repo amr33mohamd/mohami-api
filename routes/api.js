@@ -2,9 +2,9 @@
 var soap = require('soap');
 var parseString = require('xml2js').parseString;
 
-exports.username= '201116775827';
-exports.password= 'a33304454';
-exports.sender= 'Lawyers';
+exports.username= '966542668137';
+exports.password= 'Inve$3000@TECH%';
+exports.sender= 'Lawyers App';
 exports.domainName= '';
 exports.options= {};
 exports.client= 'http://www.mobilywebservices.com:86/SMSWebService/SMSIntegration.asmx?wsdl';
