@@ -7,10 +7,17 @@ app.get('/api/single_lawyer',function(req,res){
     })
 });
 api = require('../api.js')
+app.get('/testsma',function(req,res){
+  api.sendSms('your verification code is 111 ','966542668137', function(data){
+    console.log(data);
+  })
+})
 app.get('/api/add_lawyer',function(req,res){
 
   var name = req.param('name');
   var place = req.param('place');
+  var smallplace = req.param('smallplace');
+
   var type = req.param('place');
   var years = req.param('years');
   var clients = req.param('clients');
@@ -27,8 +34,8 @@ app.get('/api/add_lawyer',function(req,res){
   var fax = req.param('fax');
   var service = req.param('service');
   var code = Math.floor(Math.random()*(89998)+10000); // from 10,000 to 99,999
-
-    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?) ',[name,
+console.log(phone)
+    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code,smallplace) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?) ',[name,
   place,
   type,
   years,
@@ -45,7 +52,8 @@ app.get('/api/add_lawyer',function(req,res){
   email,
   fax,
 service,
-code], function(err,data) {
+code,
+smallplace], function(err,data) {
       if(!err){
         api.sendSms('your verification code is '+code,phone, function(data){
           console.log(data);
@@ -53,6 +61,7 @@ code], function(err,data) {
         res.json({response:data.insertId});
       }
       else {
+        console.log(err);
         res.json({response:err})
       }
     })
