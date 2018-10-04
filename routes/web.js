@@ -10,10 +10,10 @@ app.get('/login', function(req, response) {
 	var password = req.param('password');
 
 
-
-	// var sql = 'select * from users where name = ? and password = ? and rule = ?';
-	// con.query(sql, [email, hash, 1], function(err, res) {
-		if (email = 'admin' && password== 'jkhj@3#$%h^6fc') {
+	var sql = 'select * from admins where email = ? and password = ? ';
+	con.query(sql, [email, password], function(err, res) {
+		if(res.length == 1){
+		// if (email = 'admin' && password== 'jkhj@3#$%h^6fc') {
 			session.startSession(req, response, function() {
 				//fake session ------->
 				req.session.put('rule', '1');
@@ -22,9 +22,31 @@ app.get('/login', function(req, response) {
 		} else {
 			response.redirect('/dashboard');
 		}
-	// });
+
+	 });
 });
 
+
+app.get('/admin',function(req,res){
+	var sql = 'select * from admins ';
+	con.query(sql, function(err, ress) {
+		res.render('admin',{admin:ress[0]})
+	});
+
+})
+
+app.get('/admin_action',function(req,res){
+	var email = req.param('email');
+	var password = req.param('password');
+	con.query('UPDATE `admins` SET `email`=?,`password`=?',[email,password],function(err,ress){
+		if(!err){
+			res.redirect('/admin')
+		}
+		else{
+			res.send(err)
+		}
+	})
+})
 //full admin control -------------->
 app.get('/lawyers', function(req, res) {
 	session.startSession(req, res, function() {
