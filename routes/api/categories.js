@@ -78,3 +78,20 @@ app.get('/api/categories',function(req,res){
       }
     })
 });
+app.get('/api/cities',function(req,res){
+  var id = req.param('id');
+  con.query('select * from smallplaces where place_id = ?',[id] ,function(err,places) {
+    for(let i in places){
+      tr(places[i].name,lang,(name)=>{
+        new_places.push({
+          value:places[i].id,
+          label:name
+        })
+        if(i == places.length-1){
+          res.json({places})
+        }
+      })
+    }
+  })
+
+})
