@@ -154,10 +154,10 @@ $("select").change(function (){
                           <td><%= service['en']  %> <i id="<%= service['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="2"></i></td>
                           <td>
                             <select class="form-control col-lg-12" id="<%= service['id'] %>"  class="select">
+                              <option value="0">لم يتم التحديد</option>
 
-                          <%  places.forEach(function(place) {
-                            <option value="0">لم يتم التحديد</option>
-                                    if(place['id'] == service['place_id']) {%>
+                          <%  places.forEach(function(place) { %>
+                                  <%  if(place['id'] == service['place_id']) {%>
                                 <option value="<%= place['id'] %>" selected><%= place['ar'] %></option>
                                     <% } else {%>
                                 <option value="<%= place['id'] %>"><%= place['ar'] %></option>
