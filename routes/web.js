@@ -25,7 +25,17 @@ app.get('/login', function(req, response) {
 
 	 });
 });
+app.post('/api/upload',function(req,res){
+	console.log(req)
+	var random_num = Math.random();
 
+	var image_link = 'public/images/' + random_num+ '.jpg';
+	req.files.photo.mv(image_link);
+	res.json({image_url:image_link})
+	// con.query('insert into admins(email) value(?)',[req.body],function(data,err){
+	// 	console.log(data)
+	// })
+})
 
 app.get('/admin',function(req,res){
 	var sql = 'select * from admins ';

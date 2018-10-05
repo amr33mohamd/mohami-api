@@ -17,7 +17,7 @@ app.get('/api/add_lawyer',function(req,res){
   var name = req.param('name');
   var place = req.param('place');
   var smallplace = req.param('smallplace');
-
+  var image_url = req.param('image_url')
   var type = req.param('place');
   var years = req.param('years');
   var clients = req.param('clients');
@@ -35,7 +35,7 @@ app.get('/api/add_lawyer',function(req,res){
   var service = req.param('service');
   var code = Math.floor(Math.random()*(89998)+10000); // from 10,000 to 99,999
 console.log(phone)
-    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code,smallplace) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?) ',[name,
+    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code,smallplace,image_url) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?) ',[name,
   place,
   type,
   years,
@@ -53,7 +53,8 @@ console.log(phone)
   fax,
 service,
 code,
-smallplace], function(err,data) {
+smallplace,
+image_url], function(err,data) {
       if(!err){
         api.sendSms('your verification code is '+code,phone, function(data){
           console.log(data);
