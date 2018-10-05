@@ -35,7 +35,7 @@ app.get('/api/add_lawyer',function(req,res){
   var service = req.param('service');
   var code = Math.floor(Math.random()*(89998)+10000); // from 10,000 to 99,999
 console.log(phone)
-    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code,smallplace,image_url) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?) ',[name,
+    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code,smallplace,image) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?) ',[name,
   place,
   type,
   years,
