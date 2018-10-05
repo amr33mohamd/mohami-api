@@ -156,6 +156,7 @@ $("select").change(function (){
                             <select class="form-control col-lg-12" id="<%= service['id'] %>"  class="select">
 
                           <%  places.forEach(function(place) {
+                            <option value="0">لم يتم التحديد</option>
                                     if(place['id'] == service['place_id']) {%>
                                 <option value="<%= place['id'] %>" selected><%= place['ar'] %></option>
                                     <% } else {%>
