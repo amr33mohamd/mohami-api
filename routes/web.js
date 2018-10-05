@@ -396,19 +396,42 @@ app.get('/services', function(req, res) {
 				app.get('/smallplaces', function(req, res) {
 					session.startSession(req, res, function() {
 						var services2 = [];
+						var new_places = [];
+
 						sql.select('smallplaces', '1', '1', function(services) {
 							if(services.length > 0 ){
 							for(let i in services){
 								tr(services[i].name,'ar',(ar)=>{
 									tr(services[i].name,'en',(en)=>{
 									services2.push({
-										id:services[i].name,
+										id:services[i].id,
 										ar,
 										en,
+										place_id:services[i].place_id
 									})
 									if(i == services.length-1){
-										res.render('smallplaces', { services:services2 });
-									}
+										sql.select('places', '1', '1', function(places) {
+											if(places.length > 0 ){
+											for(let m in places){
+												tr(places[m].name,'ar',(ar)=>{
+													tr(places[m].name,'en',(en)=>{
+													new_places.push({
+														id:places[m].id,
+														ar,
+														en,
+													})
+													if(m == places.length-1){
+														res.render('smallplaces', { services:services2,places:new_places });
+													}
+													});
+												});
+											}
+										}
+										else {
+											res.render('smallplaces', { services:services });
+
+										}
+											});									}
 									});
 								});
 							}
@@ -418,6 +441,15 @@ app.get('/services', function(req, res) {
 
 						}
 							});
+						});
+					});
+
+
+					app.get('/edit-smallplace', function(req, res) {
+						var id = req.param('id');
+						var place_id = req.param('place_id');
+						sql.update('smallplaces', 'place_id', place_id, 'id', id, function(data,err) {
+							res.json({data,err});
 						});
 					});
 				app.get('/legalinfo', function(req, res) {

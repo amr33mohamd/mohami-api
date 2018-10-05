@@ -78,20 +78,47 @@ app.get('/api/categories',function(req,res){
       }
     })
 });
-app.get('/api/cities',function(req,res){
+
+app.get('/api/smallplaces',function(req,res){
   var id = req.param('id');
-  con.query('select * from smallplaces where place_id = ?',[id] ,function(err,places) {
-    for(let i in places){
-      tr(places[i].name,lang,(name)=>{
-        new_places.push({
-          value:places[i].id,
+  var lang = req.param('lang');
+  var new_smallplaces= [];
+
+  if(id != 0 ){
+  con.query('select * from smallplaces where place_id = ? ',[id],function(err,smallplaces){
+    if(smallplaces.length == 0){
+      res.json({smallplaces: [
+{
+value: 1,
+label: "اختر دوله اولا"
+}
+]
+})
+    }
+    else {
+    for(let l in smallplaces){
+      tr(smallplaces[l].name,lang,(name)=>{
+        new_smallplaces.push({
+          value:smallplaces[l].id,
           label:name
         })
-        if(i == places.length-1){
-          res.json({places})
+        if(l == smallplaces.length-1 ){
+          res.json({
+            smallplaces:new_smallplaces
+          })
         }
       })
     }
+  }
   })
-
+}
+else {
+  res.json({smallplaces: [
+  {
+  value: 1,
+  label: "اختر دوله اولا"
+  }
+  ]
+  })
+}
 })

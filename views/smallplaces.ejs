@@ -43,15 +43,16 @@ var table = $('#datatable-buttons').DataTable();
        }
    });
 
-$(".select_parent_category").change(function (){
+$("select").change(function (){
     var new_parent_cat = $(this).find("option:checked").val();
     var id = $(this).attr('id');
 
-    $.get('/change-parent-category',{
+    $.get('/edit-smallplace',{
         id,
-        new_parent_cat
+        place_id:new_parent_cat
       },function(data){
-        window.location = '/subcategories';
+      // alert("id "+id+"category:"+new_parent_cat)
+      window.location = '/smallplaces';
       })
 });
 
@@ -138,7 +139,7 @@ $(".select_parent_category").change(function (){
                       <tr>
                         <th>الاسم ب العربيه</th>
                         <th>الاسم ب الانجليزيه</th>
-
+                        <th>الدوله</th>
                         <th>حذف</th>
 
                       </tr>
@@ -151,6 +152,17 @@ $(".select_parent_category").change(function (){
                         <tr>
                           <td style="text-align:right"><i id="<%= service['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="1"></i><%= service['ar']  %> </td>
                           <td><%= service['en']  %> <i id="<%= service['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="2"></i></td>
+                          <td>
+                            <select class="form-control col-lg-12" id="<%= service['id'] %>"  class="select">
+
+                          <%  places.forEach(function(place) {
+                                    if(place['id'] == service['place_id']) {%>
+                                <option value="<%= place['id'] %>" selected><%= place['ar'] %></option>
+                                    <% } else {%>
+                                <option value="<%= place['id'] %>"><%= place['ar'] %></option>
+                          <% }}) %>
+                        </select>
+                        </td>
                           <td><a style="color:red" href="/custom-delete?id=<%= service['id'] %>&table=places" onclick="return confirm('هل تريد حذف هذا القسم حقا !');">X</a></td>
                            </tr>
                      <% }); %>
