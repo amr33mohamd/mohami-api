@@ -42,7 +42,7 @@ if(facebook == ''){
 if(instagram == 'undefined' || instagram == ''){
   instagram = 'http://instagram.com'
 }
-if(twitter == ''){
+if(twitter == '' || twitter == 'undefined'){
   twitter = 'http://twitter.com'
 }
 if(web == ''){
