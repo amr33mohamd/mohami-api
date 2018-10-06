@@ -27,6 +27,7 @@ app.get('/api/add_lawyer',function(req,res){
   var sex = req.param('sex');
   var address = req.param('address');
   var facebook = req.param('facebook');
+
   var instagram = req.param('instagram');
   var twitter = req.param('twitter');
   var web = req.param('web');
@@ -35,6 +36,18 @@ app.get('/api/add_lawyer',function(req,res){
   var service = req.param('service');
   var code = Math.floor(Math.random()*(89998)+10000); // from 10,000 to 99,999
 console.log(phone)
+if(facebook == ''){
+  facebook = 'http://facebook.com'
+}
+if(instagram == 'undefined' || instagram == ''){
+  instagram = 'http://instagram.com'
+}
+if(twitter == ''){
+  twitter = 'http://twitter.com'
+}
+if(web == ''){
+  web = 'http://google.com'
+}
     con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code,smallplace,image) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?) ',[name,
   place,
   type,
