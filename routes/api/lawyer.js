@@ -42,7 +42,7 @@ console.log(phone)
 if(facebook == ''){
   facebook = 'http://facebook.com'
 }
-if(instagram == 'undefined' || instagram == ''){
+if(instagram == 'undefined' || instagram == '' ){
   instagram = 'http://instagram.com'
 }
 if(twitter == '' || twitter == 'undefined'){

@@ -37,8 +37,8 @@ var table = $('#datatable-buttons').DataTable();
              new_name,
              what
            },function(data){
-              window.location = '/services';
-              //console.log(data)
+              window.location = '/smallplaces';
+              // console.log(data)
            })
        }
    });
@@ -53,6 +53,7 @@ $("select").change(function (){
       },function(data){
       // alert("id "+id+"category:"+new_parent_cat)
       window.location = '/smallplaces';
+      // alert(data)
       })
 });
 
@@ -150,8 +151,8 @@ $("select").change(function (){
 
                       <% services.forEach(function(service){ %>
                         <tr>
-                          <td style="text-align:right"><i id="<%= service['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="1"></i><%= service['ar']  %> </td>
-                          <td><%= service['en']  %> <i id="<%= service['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="2"></i></td>
+                          <td style="text-align:right"><i id="<%= service['id2']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="1"></i><%= service['ar']  %> </td>
+                          <td><%= service['en']  %> <i id="<%= service['id2']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="2"></i></td>
                           <td>
                             <select class="form-control col-lg-12" id="<%= service['id'] %>"  class="select">
                               <option value="0">لم يتم التحديد</option>

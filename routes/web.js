@@ -25,6 +25,14 @@ app.get('/login', function(req, response) {
 
 	 });
 });
+app.get('/logout',function(req,res){
+	session.startSession(req, res, function() {
+		//fake session ------->
+		req.session.put('rule', '0');
+		res.redirect('/dashboard');
+	});
+
+})
 app.post('/api/upload',function(req,res){
 	console.log(req)
 	var random_num = Math.random();
@@ -57,6 +65,8 @@ app.get('/admin_action',function(req,res){
 		}
 	})
 })
+
+
 //full admin control -------------->
 app.get('/lawyers', function(req, res) {
 	session.startSession(req, res, function() {
@@ -93,8 +103,34 @@ app.get('/lawyers', function(req, res) {
 					            value:name
 					          })
 										if(m == years.length-1){
-											res.render('users', { data: lawyers, services2,types2,years2:years3 });
+											sql.select('places', '1', '1', function(places) {
+												var places3 = []
+												for(let n in places){
+													tr(places[n].name,'ar',(place)=>{
+														places3.push({
+															id:places[n].id,
+															value:place
+														})
+														if(n == places.length-1){
+															sql.select('smallplaces', '1', '1', function(smallplaces) {
+																var smallplaces3 = []
+																for(let o in smallplaces){
+																	tr(smallplaces[n].name,'ar',(smallplace)=>{
+																		smallplaces3.push({
+																			id:smallplaces[n].id,
+																			value:smallplace
+																		})
+																		if(o == smallplaces.length-1){
+																			res.render('users', { data: lawyers, services2,types2,years2:years3,places:places3,smallplaces:smallplaces3 });
 
+																		}
+																	});
+																}
+															});
+														}
+													});
+												}
+											});
 										}
 									});
 								}
@@ -110,18 +146,36 @@ app.get('/lawyers', function(req, res) {
 });
 
 app.get('/requests', function(req, res) {
+
 	session.startSession(req, res, function() {
+		var rule = req.session.get('rule');
+
+			if(rule == 1 ){
 		sql.select('requests', '1', '1', function(users) {
 			res.render('requests', { data: users });
 		});
+	}
+	else {
+		res.redirect('/dashboard');
+	}
 	});
+
 });
 app.get('/calls', function(req, res) {
+
 	session.startSession(req, res, function() {
+		var rule = req.session.get('rule');
+
+			if(rule == 1 ){
 		sql.select('calls', '1', '1', function(users) {
 			res.render('calls', { data: users });
 		});
+	}
+	else {
+		res.redirect('/dashboard');
+	}
 	});
+
 });
 
 
@@ -221,10 +275,25 @@ app.get('/api/add-token',function(req,res){
 	})
 })
 app.get('/notify',function(req,res){
+	session.startSession(req, res, function() {
+
+	var rule = req.session.get('rule');
+
+		if(rule == 1 ){
 	res.render('notify');
+}
+});
+
 })
 app.get('/terms',function(req,res){
+	session.startSession(req, res, function() {
+
+	var rule = req.session.get('rule');
+
+		if(rule == 1 ){
 	res.render('terms');
+}
+});
 })
 
 
@@ -331,6 +400,10 @@ app.get('/services', function(req, res) {
 	});
 	app.get('/types', function(req, res) {
 		session.startSession(req, res, function() {
+			var rule = req.session.get('rule');
+
+				if(rule == 1 ){
+
 			var services2 = [];
 			sql.select('types', '1', '1', function(services) {
 				for(let i in services){
@@ -348,10 +421,15 @@ app.get('/services', function(req, res) {
 					});
 				}
 				});
+			}
 			});
 		});
 		app.get('/years', function(req, res) {
 			session.startSession(req, res, function() {
+				var rule = req.session.get('rule');
+
+					if(rule == 1 ){
+
 				var services2 = [];
 				sql.select('years', '1', '1', function(services) {
 					for(let i in services){
@@ -369,11 +447,16 @@ app.get('/services', function(req, res) {
 						});
 					}
 					});
+				}
 				});
 			});
 
 			app.get('/places', function(req, res) {
 				session.startSession(req, res, function() {
+					var rule = req.session.get('rule');
+
+						if(rule == 1 ){
+
 					var services2 = [];
 					sql.select('places', '1', '1', function(services) {
 						for(let i in services){
@@ -391,10 +474,15 @@ app.get('/services', function(req, res) {
 							});
 						}
 						});
+					}
 					});
 				});
 				app.get('/smallplaces', function(req, res) {
 					session.startSession(req, res, function() {
+						var rule = req.session.get('rule');
+
+							if(rule == 1 ){
+
 						var services2 = [];
 						var new_places = [];
 
@@ -405,6 +493,8 @@ app.get('/services', function(req, res) {
 									tr(services[i].name,'en',(en)=>{
 									services2.push({
 										id:services[i].id,
+										id2:services[i].name,
+
 										ar,
 										en,
 										place_id:services[i].place_id
@@ -417,6 +507,7 @@ app.get('/services', function(req, res) {
 													tr(places[m].name,'en',(en)=>{
 													new_places.push({
 														id:places[m].id,
+														id2:places[m].name,
 														ar,
 														en,
 													})
@@ -441,6 +532,7 @@ app.get('/services', function(req, res) {
 
 						}
 							});
+						}
 						});
 					});
 

@@ -153,8 +153,13 @@ var table = $('#datatable-buttons').DataTable();
                          <th>حساب فيسبوك</th>
                          <th>حساب تويتر</th>
                          <th>حساب انستجرام</th>
-                         <th>حساب تويتر</th>
                          <th>موقع الويب</th>
+                         <th>من العملاء</th>
+                         <th>عنوان</th>
+                         <th>الدوله</th>
+                         <th>المدينه</th>
+                         <th>رقم الفاكس</th>
+
                          <th>الصوره</th>
                          <th>تعديل الصوره</th>
                          <th>حذف</th>
@@ -248,7 +253,30 @@ var table = $('#datatable-buttons').DataTable();
                            <td><%= user['insta']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="insta"></i></td>
                            <td><%= user['twitter']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="twitter"></i></td>
                            <td><%= user['web']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="web"></i></td>
-                           <td><%= user['email']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="email"></i></td>
+                           <td><%= user['clients']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="clients"></i></td>
+                           <td><%= user['address']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="address"></i></td>
+                           <td>
+                           <select class="form-control col-lg-12" id="<%= user['id'] %>" what="place" class="select">
+                             <%  places.forEach(function(service) {
+                                       if(service['id'] == user['place']) {%>
+                                   <option value="<%= service['id'] %>" selected><%= service['value'] %></option>
+                                       <% } else {%>
+                                   <option value="<%= service['id'] %>"><%= service['value'] %></option>
+                             <% }}) %>
+                           </select>
+                          </td>
+                          <td>
+                          <select class="form-control col-lg-12" id="<%= user['id'] %>" what="place" class="select">
+                            <%  smallplaces.forEach(function(service) {
+                                      if(service['id'] == user['smallplace']) {%>
+                                  <option value="<%= service['id'] %>" selected><%= service['value'] %></option>
+                                      <% } else {%>
+                                  <option value="<%= service['id'] %>"><%= service['value'] %></option>
+                            <% }}) %>
+                          </select>
+                         </td>
+                         <td><%= user['fax']  %> <i id="<%= user['id']  %>" class="fa edit fa-pencil-square-o" aria-hidden="true" what="fax"></i></td>
+
                            <td><img width="100" height="100" src="<%= user['image']  %>"/></td>
                            <td><form action="lawyer-image" method="post" enctype="multipart/form-data">
                              <input type="file" name="image" />
