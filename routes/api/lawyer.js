@@ -31,6 +31,9 @@ app.get('/api/add_lawyer',function(req,res){
   var instagram = req.param('instagram');
   var twitter = req.param('twitter');
   var web = req.param('web');
+  var lat = req.param('lat');
+  var long = req.param('long');
+
   var email = req.param('email');
   var fax = req.param('fax');
   var service = req.param('service');
@@ -48,7 +51,7 @@ if(twitter == '' || twitter == 'undefined'){
 if(web == ''){
   web = 'http://google.com'
 }
-    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code,smallplace,image) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?) ',[name,
+    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code,smallplace,image,lat,longg) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?) ',[name,
   place,
   type,
   years,
@@ -67,7 +70,9 @@ if(web == ''){
 service,
 code,
 smallplace,
-image_url], function(err,data) {
+image_url,
+lat,
+long], function(err,data) {
       if(!err){
         api.sendSms('your verification code is '+code,phone, function(data){
           console.log(data);

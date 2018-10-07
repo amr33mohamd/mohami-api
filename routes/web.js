@@ -253,7 +253,7 @@ function SendPushNotifications(pushTokens,message_body)
 	var fetch = require('node-fetch')
     // Create the messages that you want to send to clents
     for (let i in pushTokens) {
-			var body = {"to": pushTokens[i].token,  "sound": "default","title":"Mohami App","body": message_body};
+			var body = {"to": pushTokens[i].token,  "sound": "default","title":"Lawyers App","body": message_body};
 			fetch('https://exp.host/--/api/v2/push/send', { method: 'POST', body: JSON.stringify(body) }).then(res => res.json())
 	    .then(json => console.log(json))
 			if(i == pushTokens.length-1){
