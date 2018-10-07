@@ -51,7 +51,7 @@ if(twitter == '' || twitter == 'undefined'){
 if(web == ''){
   web = 'http://google.com'
 }
-    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code,smallplace,image,lat,longg) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?) ',[name,
+    con.query('insert into lawyers(name,place,type,years,clients,line,phone,bio,sex,address,facebook,insta,twitter,web,email,fax,service,status,code,smallplace,image,lat,longg) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,?,?,?,?,?) ',[name,
   place,
   type,
   years,
