@@ -117,7 +117,7 @@ app.get('/lawyers', function(req, res) {
 																for(let o in smallplaces){
 																	tr(smallplaces[o].name,'ar',(smallplace)=>{
 																		smallplaces3.push({
-																			id:smallplaces[n].id,
+																			id:smallplaces[o].id,
 																			value:smallplace
 																		})
 																		if(o == smallplaces.length-1){
