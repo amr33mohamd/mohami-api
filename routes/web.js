@@ -115,7 +115,7 @@ app.get('/lawyers', function(req, res) {
 															sql.select('smallplaces', '1', '1', function(smallplaces) {
 																var smallplaces3 = []
 																for(let o in smallplaces){
-																	tr(smallplaces[n].name,'ar',(smallplace)=>{
+																	tr(smallplaces[o].name,'ar',(smallplace)=>{
 																		smallplaces3.push({
 																			id:smallplaces[n].id,
 																			value:smallplace
