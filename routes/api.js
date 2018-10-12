@@ -7,7 +7,7 @@ exports.password= 'Inve$3000@TECH%';
 exports.sender= 'Lawyers App';
 exports.domainName= '';
 exports.options= {};
-exports.client= 'http://www.mobilywebservices.com:86/SMSWebService/SMSIntegration.asmx?wsdl';
+exports.client= 'http://www.mobilywebservices.com/SMSWebService/SMSIntegration.asmx?wsdl';
 
 exports.sendSms = function (msg,numbers, cb) {
 	if(!cb){
